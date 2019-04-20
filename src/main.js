@@ -8,7 +8,7 @@ const componentCatalog = [
 
 const install = function (Vue) {
   for( let i = 0; i < componentCatalog.length; i++){
-    Vue.component(componentCatalog.name, componentCatalog);
+    Vue.component(componentCatalog[i].name, componentCatalog[i]);
   }
 }
 
