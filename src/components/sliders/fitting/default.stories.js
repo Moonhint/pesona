@@ -1,9 +1,9 @@
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 
-import FittingSlider from './FittingSlider';
+import FittingSlider from './FittingSlider.vue';
 
-storiesOf('Sliders|Fitting', module)
+storiesOf('OnDevelopment|FittingSlider', module)
   .add('default', () => ({
     components: { FittingSlider },
     template: '<fitting-slider @click="action"/>',

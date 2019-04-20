@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 
 import ChildNavigator from './ChildNavigator';
 
-storiesOf('Sliders|Fitting', module)
+storiesOf('OnDevelopment|FittingSlider/ChildNavigator', module)
   .add('child-navigator-by-length', () => ({
     components: { ChildNavigator },
     template: `<child-navigator 

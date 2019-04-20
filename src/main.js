@@ -1,5 +1,5 @@
-import ChildNavigator from './componentsd/sliders/fitting/ChildNavigator.vue';
-import FittingSlider from './componentsd/sliders/fitting/FittingSlider.vue';
+import ChildNavigator from './components/sliders/fitting/ChildNavigator.vue';
+import FittingSlider from './components/sliders/fitting/FittingSlider.vue';
 
 const componentCatalog = [
   ChildNavigator,

@@ -59,7 +59,7 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .container {
     display: flex;
     justify-content: center;
