@@ -1,0 +1,13 @@
+# general
+node_modules/
+npm-debug.log
+
+.DS_Store
+package-lock.json
+
+.env
+
+public/
+src/
+stories/
+.storybook
