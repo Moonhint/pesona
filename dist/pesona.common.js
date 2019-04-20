@@ -82,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "fae3");
+/******/ 	return __webpack_require__(__webpack_require__.s = "fb15");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -985,7 +985,7 @@ module.exports = document && document.documentElement;
 
 /***/ }),
 
-/***/ "fae3":
+/***/ "fb15":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1265,40 +1265,23 @@ var FittingSlider_component = normalizeComponent(
 // CONCATENATED MODULE: ./src/main.js
 
 
- // Vue.config.productionTip = false
-// new Vue({
-//   render: h => h(App),
-// }).$mount('#app')
 
 var componentCatalog = [ChildNavigator, FittingSlider];
 
-Pesona.install = function (Vue, options) {
+var install = function install(Vue) {
   for (var i = 0; i < componentCatalog.length; i++) {
     Vue.component(componentCatalog.name, componentCatalog);
-  } // // 1. add global method or property
-  // Vue.myGlobalMethod = function () {
-  //   // some logic ...
-  // }
-  // // 2. add a global asset
-  // Vue.directive('my-directive', {
-  //   bind (el, binding, vnode, oldVnode) {
-  //     // some logic ...
-  //   }
-  // })
-  // // 3. inject some component options
-  // Vue.mixin({
-  //   created: function () {
-  //     // some logic ...
-  //   }
-  // })
-  // // 4. add an instance method
-  // Vue.prototype.$myMethod = function (methodOptions) {
-  //   // some logic ...
-  // }
-
+  }
 };
-// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
+
+/* harmony default export */ var main = (install);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+/* concated harmony reexport ChildNavigator */__webpack_require__.d(__webpack_exports__, "ChildNavigator", function() { return ChildNavigator; });
+/* concated harmony reexport FittingSlider */__webpack_require__.d(__webpack_exports__, "FittingSlider", function() { return FittingSlider; });
+
+
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (main);
 
 
 

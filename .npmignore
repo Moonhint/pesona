@@ -11,3 +11,5 @@ public/
 src/
 stories/
 .storybook
+
+.babel.config.js
