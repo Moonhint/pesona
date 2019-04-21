@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="pesona-child-navigator">
     <template v-if="type==='by-length'">
       <div class="item" :class="{
           'item__round': shape === 'round',
           'item__rectangle': shape === 'rectangle'
         }" v-for="(item, index) in lengthConvert" :key="index">
-        <div class="item--text pointer" @click="childOnClick(item)">{{item}}</div> 
+        <div class="item--text pointer" @click="childOnClick(item)">{{item+1}}</div> 
       </div>
     </template>
     <template v-else>
@@ -18,7 +18,7 @@
 
 <script>
   export default {
-    name: 'child-navigator',
+    name: 'es-child-navigator',
     props:{
       type: {
         type: String,
@@ -60,12 +60,13 @@
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .pesona-child-navigator {
     display: flex;
     justify-content: center;
   }
 
   .item {
+    user-select: none;
     border: 1px solid black;
     font-size: small;
     background-color: gray;
