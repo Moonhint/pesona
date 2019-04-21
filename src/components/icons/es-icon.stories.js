@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/vue';
-import { withInfo } from '@storybook/addon-info';
 import { action } from '@storybook/addon-actions';
 
 import EsIcon from './EsIcon';
