@@ -2,10 +2,11 @@
   <div class="pesona-child-navigator">
     <template v-if="type==='by-length'">
       <div class="item" :class="{
+          'active': active === index,
           'item__round': shape === 'round',
           'item__rectangle': shape === 'rectangle'
         }" v-for="(item, index) in lengthConvert" :key="index">
-        <div class="item--text pointer" @click="childOnClick(item)">{{item+1}}</div> 
+        <div class="item--text pointer" @click="childOnClick(item, index)">{{item+1}}</div> 
       </div>
     </template>
     <template v-else>
@@ -35,6 +36,10 @@
       shape: {
         type: String,
         default: "round"
+      },
+      active: {
+        type: Number,
+        default: 0
       }
     },
     data() {
@@ -52,7 +57,8 @@
       }
     },
     methods: {
-      childOnClick(item) {
+      childOnClick(item, index) {
+        this.active = index;
         this.$emit('child-clicked', item);
       }
     }
@@ -74,6 +80,10 @@
     min-height: 20px;
     margin: 3px;
     text-align: center;
+  }
+
+  .active {
+    background-color: red;
   }
 
   .item__round {

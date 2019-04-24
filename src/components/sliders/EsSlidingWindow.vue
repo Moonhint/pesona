@@ -8,7 +8,8 @@
         <es-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
       </div>
       <div class="item-container">
-        <div class="sliding-glass" :style="slideValue">
+        <div class="sliding-glass" :style="slideTranslateObj">
+          <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
           <div @click="childClicked(item)" class="item" 
             :style="{ 'margin-right': slotGap }" 
             v-for="(item, index) in windowItems" 
@@ -23,7 +24,7 @@
       </div>
     </div>
     <div class="bottom-nav">
-      <es-child-navigator :length="windowItems.length" @child-clicked="childNavigatorClicked"/>
+      <es-child-navigator :active="currentIndex" :length="lengthOfIndex" @child-clicked="childNavigatorClicked"/>
     </div>
   </div>
 </template>
@@ -32,9 +33,12 @@
   import EsChildNavigator from './../buttons/EsChildNavigator';
   import EsIcon from './../icons/EsIcon';
 
-  // TODO: tails and head optimation
+  // TODO: style the text
+  // TODO: add swipe library
   // TODO: sync the props
   // TODO: auto slide & tempo props
+  // TODO: slot mode
+
   export default {
     name: 'es-sliding-window',
     components: {
@@ -44,6 +48,7 @@
     props: {
       // item to be placed in sliding window
       // array of object { name, item_image_url }
+      // ->>>> these props used when it is not in slotMode
       windowItems: {
         type: Array,
         default: []
@@ -58,14 +63,27 @@
         type: String,
         default: "300px"
       },
+      // ->>>>
+
+      slotMode: {
+        type: String,
+        default: false,
+      },
+
       // gap between item
       slotGap: {
         type: String,
         default: "20px"
       },
+      // background color behind the items
       backgroundColor: {
         type: String,
         default: "#000"
+      },
+      // items per slide
+      itemsPerSlide: {
+        type: Number,
+        default: 1
       }
     },
     computed: {
@@ -75,36 +93,75 @@
         let value = `${slotHeight+2}px`
         return value;
       },
-      slideValue(){
+      slideTranslateObj(){
         let slotWidth = Number.parseInt(this.slotWidth);
         let slotGap = Number.parseInt(this.slotGap);
+
         let value = {
-          transform: `translateX(-${ (slotWidth + slotGap) * this.currentIndex }px)`
+          transform: `translateX(-${ ((slotWidth + slotGap) * this.currentIndex) * this.usedItemPerSlide }px)`
         };
+
         return value;
-      }
+      },
+      halfSlotGap(){
+        let slotGap = Number.parseInt(this.slotGap);
+        let value = `${slotGap/2}px`;
+        return value;
+      },
+      maximumItemsSlideByWindowWidth(){
+        this.findWindowWidth();
+        let oneStep = Number.parseInt(this.slotGap) + Number.parseInt(this.slotWidth);
+        let maxSlide = 1;
+        if (this.windowWidth !== 0){
+          maxSlide = Math.floor(this.windowWidth / oneStep);
+        }
+        return maxSlide;
+      },
+      usedItemPerSlide(){
+        let slide = this.itemsPerSlide;
+        let maximumSlide = this.maximumItemsSlideByWindowWidth;
+        if (this.itemsPerSlide > maximumSlide){
+          slide = maximumSlide;
+        }
+        return slide;
+      },
+      lengthOfIndex(){
+        let adjustedItemLength = Math.ceil(this.windowItems.length / this.usedItemPerSlide);
+        return adjustedItemLength;
+      },
     },
     data() {
       return {
-        currentIndex: 0
+        currentIndex: 0,
+        windowWidth: 0,
       };
+    },
+    mounted(){
+      let oneStep = Number.parseInt(this.slotGap) + Number.parseInt(this.slotWidth);
+      this.findWindowWidth();
     },
     methods: {
       childNavigatorClicked(index){
-        this.currentIndex = index;
+          this.currentIndex = index;
       },
       prevClicked(){
         if (this.currentIndex !== 0){
-          this.currentIndex--;
+            this.currentIndex--;
         }
       },
       nextClicked(){
-        if (this.currentIndex !== this.windowItems.length - 1){
-          this.currentIndex++;
+        if (this.currentIndex !== this.lengthOfIndex - 1){
+            this.currentIndex++;
         }
       },
       childClicked(item){
         this.$emit('item-click', item);
+      },
+      findWindowWidth(){
+        if (this.$el){
+          let slidingGlass = this.$el.getElementsByClassName('sliding-glass')[0];
+          this.windowWidth = slidingGlass.clientWidth;
+        }
       }
     }
   }
@@ -130,6 +187,10 @@
       .sliding-glass {
         transition-timing-function: ease-in;
         transition: 1s;
+      }
+
+      .side-border {
+        display: inline-block;
       }
 
       .item {
@@ -166,6 +227,7 @@
         right: -1px;
         background: rgb(0,0,0);
         background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.773546918767507) 70%, rgba(0,0,0,1) 100%);
+        overflow: hidden;
 
         svg {
           transform: translateX(55%);
