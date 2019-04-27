@@ -7,19 +7,24 @@
       <div class="side-nav side-nav--left" :style="{ height: adjustedHeightValue }" @click="prevClicked">
         <es-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
       </div>
-      <div class="item-container">
+      <div class="item-container" :style="{ height: slotHeight }">
         <div class="sliding-glass" :style="slideTranslateObj">
           <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
-          <div @click="childClicked(item)" class="item" 
-            :style="{ 'margin-right': slotGap }" 
-            v-for="(item, index) in windowItems" 
-            :key="index">
-            <p class="item--label">{{item.name}}</p>
-            <img class="item--slot" :style="{
-              width: slotWidth,
-              height: slotHeight
-            }" :src="item.item_image_url"/>
-          </div>
+          <template v-if="!slotMode">
+            <div @click="childClicked(item)" class="item" 
+              :style="{ 'margin-right': slotGap }" 
+              v-for="(item, index) in windowItems" 
+              :key="index">
+              <p class="item--label">{{item.name}}</p>
+              <img class="item--slot" :style="{
+                width: slotWidth,
+                height: slotHeight
+              }" :src="item.item_image_url"/>
+            </div>
+          </template>
+          <template v-else>
+            <slot class="items-in-slot-container">Insert item here</slot>
+          </template>
         </div>
       </div>
     </div>
@@ -37,7 +42,6 @@
   // TODO: add swipe library
   // TODO: sync the props
   // TODO: auto slide & tempo props
-  // TODO: slot mode
 
   export default {
     name: 'es-sliding-window',
@@ -46,13 +50,20 @@
       EsIcon
     },
     props: {
+      slotMode: {
+        type: Boolean,
+        default: false
+      },
       // item to be placed in sliding window
       // array of object { name, item_image_url }
-      // ->>>> these props used when it is not in slotMode
+      // these props used when it is not in slotMode
       windowItems: {
         type: Array,
-        default: []
+        default: () => {
+          return []
+        }
       },
+
       // width of one item
       slotWidth: {
         type: String,
@@ -63,13 +74,6 @@
         type: String,
         default: "300px"
       },
-      // ->>>>
-
-      slotMode: {
-        type: String,
-        default: false,
-      },
-
       // gap between item
       slotGap: {
         type: String,
@@ -126,7 +130,11 @@
         return slide;
       },
       lengthOfIndex(){
-        let adjustedItemLength = Math.ceil(this.windowItems.length / this.usedItemPerSlide);
+        let itemLength = this.slotItems.length;
+        if (!this.slotMode){
+          itemLength = this.windowItems.length;
+        }
+        let adjustedItemLength = Math.ceil(itemLength / this.usedItemPerSlide);
         return adjustedItemLength;
       },
     },
@@ -134,13 +142,27 @@
       return {
         currentIndex: 0,
         windowWidth: 0,
+        slotItems: []
       };
     },
     mounted(){
-      let oneStep = Number.parseInt(this.slotGap) + Number.parseInt(this.slotWidth);
       this.findWindowWidth();
+
+      if (this.slotMode){
+        this.lockItemDimension();
+      }
     },
     methods: {
+      lockItemDimension(){
+        this.slotItems = this.$el.getElementsByClassName('pesona-sliding-window-item');
+
+        for (let i = 0; i < this.slotItems.length; i++){
+          let element = this.slotItems[i];
+          element.style.width = this.slotWidth;
+          element.style.height = this.slotHeight;
+          element.style.marginRight = this.slotGap;
+        }
+      },
       childNavigatorClicked(index){
           this.currentIndex = index;
       },
@@ -181,10 +203,11 @@
       overflow: hidden;
       white-space: nowrap;
       width: 100%;
-      height: 300px;
+      // height: 300px;
       border: 1px solid black;
 
       .sliding-glass {
+        font-size: 0;
         transition-timing-function: ease-in;
         transition: 1s;
       }
