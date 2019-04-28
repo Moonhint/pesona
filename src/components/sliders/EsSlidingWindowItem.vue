@@ -1,9 +1,9 @@
 <template>
   <div class="pesona-sliding-window-item">
-      <p class="pesona-sliding-window-item--container">
+      <div class="pesona-sliding-window-item--container">
         <slot></slot>
-      </p>
-      <img v-if="!useOnlyBackgroundColor" class="pesona-sliding-window-item--background"
+      </div>
+      <img v-if="!useOnlyBackgroundColor" class="pesona-sliding-window-item--background unselectable"
            :src="backgroundImage"/>
       <div v-if="useOnlyBackgroundColor"
            :style="{'background-color': backgroundColor }"
@@ -61,6 +61,15 @@
       width: inherit;
       height: inherit;
     }
+  }
+
+  .unselectable {
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
 
 </style>

@@ -1,22 +1,22 @@
 <template>
   <div class="pesona-sliding-window">
-    <div class="window-glass" :style="{ 'background-color': backgroundColor }">
-      <div class="side-nav side-nav--right" :style="{ height: adjustedHeightValue }" @click="nextClicked">
+    <div class="window-glass" :style="{ 'background-color': backgroundColor, 'padding-top': topBottomGap, 'padding-bottom': topBottomGap }">
+      <div class="side-nav side-nav--right" v-if="!hideSideNavigation" :style="{ height: adjustedHeightValue }" @click="goToNextIndex">
         <es-icon class="side-nav--action" color="white" name="angle-right" size="50"/>
       </div>
-      <div class="side-nav side-nav--left" :style="{ height: adjustedHeightValue }" @click="prevClicked">
+      <div class="side-nav side-nav--left" v-if="!hideSideNavigation" :style="{ height: adjustedHeightValue }" @click="goToPrevIndex">
         <es-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
       </div>
       <div class="item-container" :style="{ height: slotHeight }">
         <div class="sliding-glass" :style="slideTranslateObj">
           <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
           <template v-if="!slotMode">
-            <div @click="childClicked(item)" class="item" 
+            <div @click="childClicked(item)" class="item unselectable" 
               :style="{ 'margin-right': slotGap }" 
               v-for="(item, index) in windowItems" 
               :key="index">
               <p class="item--label">{{item.name}}</p>
-              <img class="item--slot" :style="{
+              <img class="item--slot unselectable" :style="{
                 width: slotWidth,
                 height: slotHeight
               }" :src="item.item_image_url"/>
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom-nav">
+    <div class="bottom-nav" v-if="!hideBottomNavigation">
       <es-child-navigator :active="currentIndex" :length="lengthOfIndex" @child-clicked="childNavigatorClicked"/>
     </div>
   </div>
@@ -37,11 +37,13 @@
 <script>
   import EsChildNavigator from './../buttons/EsChildNavigator';
   import EsIcon from './../icons/EsIcon';
+  import Hammer from 'hammerjs';
 
   // TODO: style the text
-  // TODO: add swipe library
   // TODO: sync the props
   // TODO: auto slide & tempo props
+  // TODO: space and logo header
+  // TODO: background image background
 
   export default {
     name: 'es-sliding-window',
@@ -79,6 +81,10 @@
         type: String,
         default: "20px"
       },
+      topBottomGap: {
+        type: String,
+        default: "0"
+      },
       // background color behind the items
       backgroundColor: {
         type: String,
@@ -88,13 +94,24 @@
       itemsPerSlide: {
         type: Number,
         default: 1
+      },
+
+      // hide navigation 
+      hideBottomNavigation: {
+        type: Boolean,
+        default: false
+      },
+      hideSideNavigation: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
       // TODO: give back the measurement unit not just pixel
       adjustedHeightValue() {
         let slotHeight = Number.parseInt(this.slotHeight);
-        let value = `${slotHeight+2}px`
+        let topBottomGap = Number.parseInt(this.topBottomGap);
+        let value = `${(slotHeight+2) + (topBottomGap*2)}px`
         return value;
       },
       slideTranslateObj(){
@@ -142,17 +159,30 @@
       return {
         currentIndex: 0,
         windowWidth: 0,
-        slotItems: []
+        slotItems: [],
+        swipeDetector: undefined
       };
     },
     mounted(){
       this.findWindowWidth();
+      this.setupTouchEvent();
 
       if (this.slotMode){
         this.lockItemDimension();
       }
     },
     methods: {
+      setupTouchEvent(){
+        let self = this;
+        let slidingGlass = self.$el.getElementsByClassName('sliding-glass')[0];
+        this.swipeDetector = new Hammer(slidingGlass, {threshold: 1, velocity: 0.1});
+        this.swipeDetector.on('swipeleft', function(ev) {
+          self.goToNextIndex();
+        });
+        this.swipeDetector.on('swiperight', function(ev) {
+          self.goToPrevIndex();
+        })
+      },
       lockItemDimension(){
         this.slotItems = this.$el.getElementsByClassName('pesona-sliding-window-item');
 
@@ -166,12 +196,12 @@
       childNavigatorClicked(index){
           this.currentIndex = index;
       },
-      prevClicked(){
+      goToPrevIndex(){
         if (this.currentIndex !== 0){
             this.currentIndex--;
         }
       },
-      nextClicked(){
+      goToNextIndex(){
         if (this.currentIndex !== this.lengthOfIndex - 1){
             this.currentIndex++;
         }
@@ -217,7 +247,6 @@
       }
 
       .item {
-        user-select: none;
         display: inline-block;
         position: relative;
         &--label {
@@ -266,5 +295,14 @@
       margin-top: 10px;
     }
 
+  }
+
+  .unselectable {
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
 </style>

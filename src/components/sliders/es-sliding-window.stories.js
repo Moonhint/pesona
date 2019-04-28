@@ -15,7 +15,7 @@ storiesOf('OnDevelopment|SlidingWindow', module)
       { name: 'Flower Again?', item_image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC4D-PdFuo4_qIHQWg4502kOy-z6ApXH8B0IpGx3LxI_s0jduT'},
       { name: 'This is a very very nice landscape, is it?', item_image_url: 'http://res.publicdomainfiles.com/pdf_view/17/13504599616594.png'},
       { name: 'I know, some place', item_image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvK7mVjIkSFk-4Tu96xUrPQJKFlMt_loVFoItYy6uCRMZmamDT'},
-    ]" @item-click="itemClick" :items-per-slide="4"/>`,
+    ]" @item-click="itemClick" :items-per-slide="2" :top-bottom-gap="'5px'" />`,
     methods: { 
       itemClick: action('itemClick') 
     },
