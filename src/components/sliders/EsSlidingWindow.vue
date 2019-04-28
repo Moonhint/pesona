@@ -40,9 +40,7 @@
   import Hammer from 'hammerjs';
 
   // TODO: style the text
-  // TODO: sync the props
-  // TODO: auto slide & tempo props
-  // TODO: space and logo header
+  // TODO: left space and logo header
   // TODO: background image background
 
   export default {
@@ -104,6 +102,16 @@
       hideSideNavigation: {
         type: Boolean,
         default: false
+      },
+
+      // auto slide
+      autoSlide: {
+        type: Boolean,
+        default: false
+      },
+      autoSlideInterval: {
+        type: Number,
+        default: 3000
       }
     },
     computed: {
@@ -160,18 +168,43 @@
         currentIndex: 0,
         windowWidth: 0,
         slotItems: [],
-        swipeDetector: undefined
+        swipeDetector: undefined,
+        autoSlideDirection: "right",
+        autoSlideTimer: undefined
       };
     },
     mounted(){
+      let self = this;
       this.findWindowWidth();
       this.setupTouchEvent();
 
       if (this.slotMode){
         this.lockItemDimension();
       }
+
+      if (this.autoSlide){
+        self.autoSlideTimer = setInterval(()=>{
+          self.triggerAutoSlide();
+        }, self.autoSlideInterval)
+      }
     },
     methods: {
+      triggerAutoSlide(){
+        let self = this;
+        if (self.autoSlideDirection === 'right'){
+          if (this.currentIndex !== this.lengthOfIndex - 1){
+            self.currentIndex++;
+          }else{
+            self.autoSlideDirection = 'left';
+          }
+        }else{
+          if (this.currentIndex !== 0){
+            this.currentIndex--;
+          }else{
+            self.autoSlideDirection = 'right';
+          }
+        }
+      },
       setupTouchEvent(){
         let self = this;
         let slidingGlass = self.$el.getElementsByClassName('sliding-glass')[0];
