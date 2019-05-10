@@ -13,6 +13,9 @@ module.exports = async ({ config, mode }) => {
     include: path.resolve(__dirname, '../'),
   });
 
+  config.resolve.alias.mixins = path.resolve('src/mixins');
+  config.resolve.alias.utils = path.resolve('src/utils');
+
   // Return the altered config
   return config;
 };

@@ -31,6 +31,7 @@
   export default {
     name: 'x-icon',
     props: {
+      // currenty support 2 type of icon (font-awesome, material-icons)
       mode: {
         type: String,
         default: 'font-awesome'

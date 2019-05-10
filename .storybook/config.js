@@ -1,19 +1,9 @@
 import { configure, addParameters } from '@storybook/vue';
-import { themes } from '@storybook/theming';
+import customTheme from './customTheme';
 
 // Option defaults:
 addParameters({
   options: {
-    /**
-     * name to display in the top left corner
-     * @type {String}
-     */
-    name: 'Pesona',
-    /**
-     * URL for name in top left corner to link to
-     * @type {String}
-     */
-    url: '#',
     /**
      * show story component as full screen
      * @type {Boolean}
@@ -75,7 +65,7 @@ addParameters({
     /**
      * theme storybook, see link below
      */
-    theme: themes.dark,
+    theme: customTheme,
   },
 });
 
