@@ -31,8 +31,8 @@
   // TODO: button with ghost property
   // TODO: button with spinners
 
-  import dimensionCalculator from 'mixins/dimensionCalculator';
-  import colorPallete from 'mixins/colorPallete';
+  import dimensionMixin from 'mixins/dimensionMixin';
+  import styleMixin from 'mixins/styleMixin';
 
   const SIZE_VALUE = {
     HERO: "40px",
@@ -57,7 +57,7 @@
 
   export default {
     name: 'x-button',
-    mixins: [colorPallete, dimensionCalculator],
+    mixins: [styleMixin, dimensionMixin],
     props:{
       type: {
         type: String,
