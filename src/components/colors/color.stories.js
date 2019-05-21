@@ -8,30 +8,13 @@ color specs on spesific component:
 
 */
 
-
+import colorUtil from 'utils/color';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, color } from '@storybook/addon-knobs';
 
 import xTheme from './xTheme';
 import xColorPanel from './../panels/xColorPanel';
-
-
-// todo: refactor this function out, and make it not only about from rgb to hex
-function toHex(rgb){
-  var isHEX  = /^#[0-9A-F]{6}$/i.test(rgb);
-
-  if (isHEX){
-    return rgb;
-  }else{
-    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (rgb && rgb.length === 4) ? "#" +
-     ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-     ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-     ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-  }
- }
- 
 
 storiesOf('OnDevelopment|Theme', module)
   .addDecorator(withKnobs)
@@ -49,61 +32,61 @@ storiesOf('OnDevelopment|Theme', module)
     props: {
       // todo: setup a good hex for this example
       brandPrimary: {
-        default: toHex(color('Primary', "#336B87", 'Brand Colors'))
+        default: colorUtil.toHex(color('Primary', "#336B87", 'Brand Colors'))
       },
       brandSecondary: {
-        default: toHex(color('Secondary', "#90AFC5", 'Brand Colors'))
+        default: colorUtil.toHex(color('Secondary', "#90AFC5", 'Brand Colors'))
       },
       brandAccent: {
-        default: toHex(color('Accent', "#763626", 'Brand Colors'))
+        default: colorUtil.toHex(color('Accent', "#763626", 'Brand Colors'))
       },
       onPrimary: {
-        default: toHex(color('On Primary', "#111111", 'Brand Colors'))
+        default: colorUtil.toHex(color('On Primary', "#111111", 'Brand Colors'))
       },
       onSecondary: {
-        default: toHex(color('On Secondary', "#222222", 'Brand Colors'))
+        default: colorUtil.toHex(color('On Secondary', "#222222", 'Brand Colors'))
       },
       onAccent: {
-        default: toHex(color('On Accent', "#333333", 'Brand Colors'))
+        default: colorUtil.toHex(color('On Accent', "#333333", 'Brand Colors'))
       },
       actionSuccess: {
-        default: toHex(color('Success', "#4bf442", 'Action Colors'))
+        default: colorUtil.toHex(color('Success', "#4bf442", 'Action Colors'))
       },
       actionError: {
-        default: toHex(color('Error', "#4bf442", 'Action Colors'))
+        default: colorUtil.toHex(color('Error', "#4bf442", 'Action Colors'))
       },
       actionWarning: {
-        default: toHex(color('Warning', "#4bf442", 'Action Colors'))
+        default: colorUtil.toHex(color('Warning', "#4bf442", 'Action Colors'))
       },
       actionInfo: {
-        default: toHex(color('Info', "#4bf442", 'Action Colors'))
+        default: colorUtil.toHex(color('Info', "#4bf442", 'Action Colors'))
       },
       onSuccess: {
-        default: toHex(color('On Success', "#111111", 'Action Colors'))
+        default: colorUtil.toHex(color('On Success', "#111111", 'Action Colors'))
       },
       onError: {
-        default: toHex(color('On Error', "#222222", 'Action Colors'))
+        default: colorUtil.toHex(color('On Error', "#222222", 'Action Colors'))
       },
       onWarning: {
-        default: toHex(color('On Warning', "#333333", 'Action Colors'))
+        default: colorUtil.toHex(color('On Warning', "#333333", 'Action Colors'))
       },
       onInfo: {
-        default: toHex(color('On Info', "#333333", 'Action Colors'))
+        default: colorUtil.toHex(color('On Info', "#333333", 'Action Colors'))
       },
       shadeBlack: {
-        default: toHex(color('Black', "#000000", 'Shade Colors'))
+        default: colorUtil.toHex(color('Black', "#000000", 'Shade Colors'))
       },
       shadeSemiBlack: {
-        default: toHex(color('Semi Black', "#454545", 'Shade Colors'))
+        default: colorUtil.toHex(color('Semi Black', "#454545", 'Shade Colors'))
       },
       shadeGray: {
-        default: toHex(color('Gray', "#888888", 'Shade Colors'))
+        default: colorUtil.toHex(color('Gray', "#888888", 'Shade Colors'))
       },
       shadeSemiWhite: {
-        default: toHex(color('Semi White', "#BCBCBC", 'Shade Colors'))
+        default: colorUtil.toHex(color('Semi White', "#BCBCBC", 'Shade Colors'))
       },
       shadeWhite: {
-        default: toHex(color('White', "#FFFFFF", 'Shade Colors'))
+        default: colorUtil.toHex(color('White', "#FFFFFF", 'Shade Colors'))
       },
     },
     template: `

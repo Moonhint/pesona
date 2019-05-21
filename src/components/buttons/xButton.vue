@@ -1,65 +1,45 @@
 <template>
-  <a  class="pesona-button" 
+  <div class="pesona-button" 
       :class="{
         'ripple': ripple, 
-        'uppercase': uppercase
+        'uppercase': uppercase,
+        'block': block,
+        'disabled': disabled,
+        'ghost': ghost,
+        'shape-round': (shape === 'round'),
+        'shape-pill': (shape === 'pill'),
+        'shape-rectangle': (shape === 'rectangle'),
+        'texture-flat': (texture === 'flat'),
+        'texture-emboss': (texture === 'emboss'),
+        'texture-engrave': (texture === 'engrave')
       }"
       :style="{ 
         'font-size': sizeValue,  
-        'padding': `${sizeHalfValue} ${sizeValue}`,
+        'padding': `${sizeHalfValue} ${sizeValueByAncorCalc}`,
         'margin': margin,
-        'font-family': fontFamily
+        'font-family': fontFamily,
       }"
+      :href="href"
+      @click="onClick"
       v-on="$listeners">
     <slot></slot>
-  </a>
+  </div>
 </template>
 
 <script>
-  // TODO: button with background colors (red, green, blue, yellow, white, black, custom)
-  // TODO: button with text colors (?)
-  // TODO: button with margin (default and custom margin)
   // TODO: button with font-style (default and custom) 
-  // TODO: button with icon (icon position -> right, left)
-  // TODO: explore available button style: 'flat'{default}, 'embose'
   // TODO: button with style 'none'{default}, 'ripple', 
-  // TODO: button with disable
-  // TODO: button with href
   // TODO: button with gradient or solid{default}
-  // TODO: button with block property
-  // TODO: button shape (round, pill, rectangle{default})
-  // TODO: button with ghost property
   // TODO: button with spinners
 
   import dimensionMixin from 'mixins/dimensionMixin';
   import styleMixin from 'mixins/styleMixin';
 
-  const SIZE_VALUE = {
-    HERO: "40px",
-    XXLARGE: "32px",
-    XLARGE: "28px",
-    LARGE: "22px",
-    MEDIUM: "18px",
-    FAIR: "16px",
-    BASE: "14px",
-    SMALL: "12px",
-    TINY: "10px"
-  }
-
-  const COLOR = {
-    RED: "",
-    GREEN: "",
-    BLUE: "",
-    YELLOW: "",
-    WHITE: "",
-    BLACK: ""
-  }
-
   export default {
     name: 'x-button',
     mixins: [styleMixin, dimensionMixin],
     props:{
-      type: {
+      texture: {
         type: String,
         default: "flat"
       },
@@ -86,26 +66,60 @@
         type: Boolean,
         default: true
       },
+      schema: {
+        type: String,
+        default: "default"
+      },
       backgroundColor: {
         type: String,
-        default: '#BFBFBF'
+        default: ''
       },
       color: {
         type: String,
-        default: '#343434'
+        default: ''
+      },
+      href: {
+        type: String,
+        default: undefined
+      },
+      openInNewTab: {
+        type: Boolean,
+        default: false
+      },
+      block: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      ghost: {
+        type: Boolean,
+        default: false
+      },
+      shape: {
+        type: String,
+        default: 'rectangle'
       }
     },
     data() {
       return {
-
+        ancorElem: undefined
       };
     },
     created() {
 
     },
     mounted(){
-      this.$el.style.setProperty("--bg-color-value", this.backgroundColorValue);
-      this.$el.style.setProperty("--color-value", this.colorValue);
+      this.ancorElem = this.$el.getElementsByTagName('a')[0];
+      this.setColorsByScheme(this.schema);
+      this._setLocalCssVariables({ 
+        '--size-value': this.sizeValue,
+        '--size-half-value': this.sizeHalfValue,
+        '--size-double-value': this.sizeDoubleValue,
+        '--pointer-events-value': this.pointerEventsValue
+      });
     },
     computed: {
       sizeValue(){
@@ -114,15 +128,64 @@
       sizeHalfValue() {
         return this._normalizeHalfValue(this.size);
       },
-      backgroundColorValue(){
-        return this.backgroundColor;
+      sizeDoubleValue() {
+        return this._normalizeDoubleValue(this.size);
       },
-      colorValue(){
-        return this.color;
-      }
+      anyAncorOnChild(){
+        return (this.ancorElem) ? true : false;
+      },
+      sizeValueByAncorCalc() {
+        if (this.anyAncorOnChild){
+          return 0;
+        }else{
+          return this.sizeValue;
+        }
+      },
+      pointerEventsValue(){
+        return (this.disabled) ? 'none' : 'auto';
+      },
     },
     methods: {
-
+      setColorsByScheme(val){
+        let currentColors = this._getCurrentColors();
+        let hex = "";
+        let onHex = "";
+        if (currentColors.actions){
+          hex = currentColors.actions[val];
+          onHex = currentColors.onActions[val];
+          if (!hex){
+            hex = currentColors.shade.gray;
+            onHex = currentColors.shade.black;
+          }
+        }
+        this._setLocalCssVariables({
+          '--bg-color-value': hex,
+          '--color-value': onHex
+        });
+      },
+      onClick(){
+        if (this.href && !this.disabled){
+          if (this.openInNewTab){
+            window.open(this.href, '_blank');
+          }else{
+            window.location = this.href;
+          }
+        }
+      }
+    },
+    watch: {
+      schema: function (val){
+        this.setColorsByScheme(val);
+      },
+      backgroundColor: function (val){
+        this._setLocalCssVariables({ '--bg-color-value': val });
+      },
+      color: function (val){
+        this._setLocalCssVariables({ '--color-value': val });
+      },
+      disabled: function (val){
+        this._setLocalCssVariables({ '--pointer-events-value': (val) ? 'none' : 'auto' });
+      }
     }
   }
 </script>
@@ -143,6 +206,17 @@
     outline: 0;
     border: none;
     border-radius: 2px;
+
+    a {
+      text-decoration: none;
+      color: var(--color-value);
+      padding: var(--size-half-value) var(--size-value);
+      pointer-events: var(--pointer-events-value);
+    }
+  }
+
+  .block {
+    display: block;
   }
 
   .uppercase {
@@ -163,6 +237,40 @@
     background-color: var(--color-value);
     background-size: 100%;
     transition: background 0s;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ghost {
+    border: 1px solid var(--bg-color-value);
+    background-color: transparent;
+  }
+
+  .shape-round {
+    border-radius: 50%;
+  }
+
+  .shape-pill {
+    border-radius: var(--size-double-value);
+  }
+
+  .shape-rectangle {
+    border-radius: 0;
+  }
+
+  .texture-flat {
+    box-shadow: none;    
+  }
+
+  .texture-emboss {
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);    
+  }
+
+  .texture-engrave {
+    box-shadow: inset 0.02em 0.08em 0.2em 0.08em rgba(0, 0, 0, 0.5);   
   }
 
 </style>

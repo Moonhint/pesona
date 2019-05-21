@@ -51,6 +51,19 @@ export default {
           return `${Math.floor(parseInt(this.xPESONA_SIZE_VALUE.BASE)/2)}px`;
         }
       }
+    },
+    _normalizeDoubleValue: function(size) {
+      let templateValue = this.xPESONA_SIZE_VALUE[size.toUpperCase()];
+      if (templateValue){
+        return `${Math.floor(parseInt(templateValue)*2)}px`;
+      }else{
+        let sizeValue = parseInt(size);
+        if (sizeValue){
+          return `${Math.floor(sizeValue*2)}px`;
+        }else{
+          return `${Math.floor(parseInt(this.xPESONA_SIZE_VALUE.BASE)*2)}px`;
+        }
+      }
     }
   },
 }

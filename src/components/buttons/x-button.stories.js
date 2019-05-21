@@ -1,62 +1,150 @@
+import colorUtil from 'utils/color';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
+import { withKnobs, select, text, boolean, color } from '@storybook/addon-knobs';
+import StoryRouter from 'storybook-vue-router';
 
 import xButton from './xButton';
 import xIcon from './../icons/xIcon';
 
-const SIZE_VALUE = {
-  HERO: "40px",
-  XXLARGE: "32px",
-  XLARGE: "28px",
-  LARGE: "22px",
-  MEDIUM: "18px",
-  FAIR: "16px",
-  BASE: "14px",
-  SMALL: "12px",
-  TINY: "10px"
-}
+const Page1 = {
+  template: '<h1>Page 1</h1>'
+};
+ 
+const Page2 = {
+  template: '<h1>Page 2</h1>'
+};
 
 storiesOf('OnDevelopment|Button', module)
-  .add('button-size', () => ({
-    components: { xButton },
-    template: `
-      <div>
-        <div>
-          Button Large: <x-button @click="action" :size="'large'">Button</x-button>
-        </div>
-        <div>
-          Button Medium: <x-button @click="action" :size="'medium'">Button</x-button>
-        </div>
-        <div>
-          Button Fair: <x-button @click="action" :size="'fair'">Button</x-button>
-        </div>
-        <div>
-          Button Base: <x-button @click="action" :size="'base'">Button</x-button>
-        </div>
-        <div>
-          Button 30px: <x-button @click="action" :size="'30px'">Button</x-button>
-        </div>
-      </div>
-    `,
+  .addDecorator(withKnobs)
+  .addDecorator(StoryRouter({}, {
+    routes: [
+      { path: '/', component: Page1 },
+      { path: '/page2', component: Page2 }
+    ]
+  }))
+  .add('button', () => ({
+    components: { xButton, xIcon },
+    template: `<x-button @click="action" 
+                    :ripple="ripple"
+                    :uppercase="uppercase"
+                    :size="sizeValue"
+                    :schema="schemaSelect"
+                    :background-color="backgroundColor"
+                    :color="color"
+                    :href="hrefUrl"
+                    :open-in-new-tab="openInNewTab"
+                    :block="block"
+                    :disabled="disabled"
+                    :ghost="ghost"
+                    :shape="shape"
+                    :texture="texture">
+                
+                  Button
+                  <x-icon name="music" padding="0"/>
+               </x-button>`,
+    props: {
+      sizeSelect: {
+        default: select('Size Option', {
+          hero: 'hero',
+          xxlarge: 'xxlarge',
+          large: 'large',
+          medium: 'medium',
+          fair: 'fair',
+          base: 'base',
+          small: 'small',
+          tiny: 'tiny'
+        }, 'fair', 'Size')
+      },
+      sizeText: {
+        default: text('Size', '', 'Size')
+      },
+      ripple: {
+        default: boolean('Ripple', false, 'Effect')
+      },
+      uppercase: {
+        default: boolean('Uppercase', false, 'Effect')
+      },
+      block: {
+        default: boolean('Block', false, 'Effect')
+      },
+      disabled: {
+        default: boolean('Disabled', false, 'Effect')
+      },
+      ghost: {
+        default: boolean('Ghost', false, 'Effect')
+      },
+      schemaSelect: {
+        default: select('Schema Option', {
+          default: 'default',
+          success: 'success',
+          error: 'error',
+          warning: 'warning',
+          info: 'info'
+        }, 'default', 'Color')
+      },
+      color: {
+        default: colorUtil.toHex(color('Color', "", 'Color'))
+      },
+      backgroundColor: {
+        default: colorUtil.toHex(color('BG Color', "", 'Color'))
+      },
+      hrefUrl: {
+        default: text('href', '', 'Link')
+      },
+      openInNewTab: {
+        default: boolean('Open New Tab', false, 'Link')
+      },
+      shape: {
+        default: select('Shape', {
+          rectangle: 'rectangle',
+          pill: 'pill',
+          round: 'round'
+        }, 'rectangle', 'Shape')
+      },
+      texture: {
+        default: select('Texture', {
+          flat: 'flat',
+          emboss: 'emboss',
+          engrave: 'engrave',
+        }, 'flat', 'Shape')
+      },
+    },
+    computed: {
+      sizeValue(){
+        if (this.sizeText){
+          return this.sizeText;
+        }else{
+          return this.sizeSelect;
+        }
+      }
+    },
     methods: { 
       action: action('clicked'),
-      childClick: action('childClick') 
     },
   }))
-  .add('button with our ripple', () => ({
+  .add('button with router', () => ({
     components: { xButton, xIcon },
-    template: `<x-button @click="action" :ripple="false" :size="'medium'">Button</x-button>`,
-    methods: { 
-      action: action('clicked'),
-      childClick: action('childClick') 
+    props: {
+      disabled: {
+        default: boolean('Disabled', false, 'Effect')
+      },
     },
-  }))
-  .add('button-color', () => ({
-    components: { xButton, xIcon },
-    template: `<x-button @click="action" :type="'lain'" :size="'medium'">Button</x-button>`,
+    template: ` <div>
+                  <router-view/>
+                  <x-button :schema="'info'" :disabled="disabled">
+                    <router-link to="/">
+                      To Page 1
+                    </router-link>
+                  </x-button>
+                  <x-button :schema="'info'" :disabled="disabled">
+                    <router-link to="/page2">
+                      To Page 2
+                    </router-link>
+                  </x-button>
+                </div>`,
     methods: { 
       action: action('clicked'),
-      childClick: action('childClick') 
     },
   }));
 
