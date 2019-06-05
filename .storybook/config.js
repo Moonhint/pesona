@@ -1,5 +1,6 @@
 import { configure, addParameters } from '@storybook/vue';
 import customTheme from './customTheme';
+import './global.css';
 
 // Option defaults:
 addParameters({

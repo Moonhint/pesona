@@ -4,6 +4,8 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, select, text, boolean, color } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-vue-router';
 
+import buttonMarkdown from './markdowns/button.md';
+
 import xButton from './xButton';
 import xIcon from './../icons/xIcon';
 
@@ -39,9 +41,7 @@ storiesOf('OnDevelopment|Button', module)
                     :ghost="ghost"
                     :shape="shape"
                     :texture="texture">
-                
-                  Button
-                  <x-icon name="music" padding="0"/>
+                  {{content}}
                </x-button>`,
     props: {
       sizeSelect: {
@@ -109,6 +109,9 @@ storiesOf('OnDevelopment|Button', module)
           engrave: 'engrave',
         }, 'flat', 'Shape')
       },
+      content: {
+        default: text('Content', 'Button', 'Content')
+      },
     },
     computed: {
       sizeValue(){
@@ -122,7 +125,10 @@ storiesOf('OnDevelopment|Button', module)
     methods: { 
       action: action('clicked'),
     },
-  }))
+  }),
+  {
+    notes: { markdown: buttonMarkdown }
+  })
   .add('button with router', () => ({
     components: { xButton, xIcon },
     props: {
@@ -141,6 +147,39 @@ storiesOf('OnDevelopment|Button', module)
                     <router-link to="/page2">
                       To Page 2
                     </router-link>
+                  </x-button>
+                </div>`,
+    methods: { 
+      action: action('clicked'),
+    },
+  }))
+  .add('button round with icon', () => ({
+    components: { xButton, xIcon },
+    props: {
+      disabled: {
+        default: boolean('Disabled', false, 'Effect')
+      },
+      shape: {
+        default: select('Shape', {
+          rectangle: 'rectangle',
+          pill: 'pill',
+          round: 'round'
+        }, 'round', 'Shape')
+      },
+      texture: {
+        default: select('Texture', {
+          flat: 'flat',
+          emboss: 'emboss',
+          engrave: 'engrave',
+        }, 'emboss', 'Shape')
+      },
+    },
+    template: ` <div>
+                  <x-button :schema="'info'" 
+                            :disabled="disabled" 
+                            :shape="shape"
+                            :texture="texture">
+                    <x-icon name="music" hero/>
                   </x-button>
                 </div>`,
     methods: { 

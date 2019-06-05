@@ -52,6 +52,23 @@ export default {
         }
       }
     },
+    _normalizeHalfInHalfValue: function(size) {
+      let templateValue = this.xPESONA_SIZE_VALUE[size.toUpperCase()];
+      let halfValue = 0;
+      let inHalfValue = 0;
+      if (templateValue){
+        halfValue = Math.floor(parseInt(templateValue)/2);
+      }else{
+        let sizeValue = parseInt(size);
+        if (sizeValue){
+          halfValue = Math.floor(sizeValue/2);
+        }else{
+          halfValue = this.xPESONA_SIZE_VALUE.BASE/2;
+        }
+      }
+      inHalfValue = Math.floor(halfValue/2);
+      return `${halfValue+inHalfValue}px`;
+    },
     _normalizeDoubleValue: function(size) {
       let templateValue = this.xPESONA_SIZE_VALUE[size.toUpperCase()];
       if (templateValue){

@@ -131,6 +131,9 @@
       sizeDoubleValue() {
         return this._normalizeDoubleValue(this.size);
       },
+      sizeHalfInHalfValue(){
+        return this._normalizeHalfInHalfValue(this.size);
+      },
       anyAncorOnChild(){
         return (this.ancorElem) ? true : false;
       },
@@ -138,7 +141,11 @@
         if (this.anyAncorOnChild){
           return 0;
         }else{
-          return this.sizeValue;
+          if (this.shape === 'round'){
+            return this.sizeHalfInHalfValue;
+          }else{
+            return this.sizeValue;
+          }
         }
       },
       pointerEventsValue(){
