@@ -1,11 +1,15 @@
 # pesona
 
-## To build the project
+## To build and publish npm the library
 ```
 yarn lib
+# update the version in package.json
+npm publish
 ```
 
-### Publish it to npm
-```
-npm run serve
-```
+## Every git push will run ci publisher on netlify
+[Published](https://quirky-lichterman-2bc441.netlify.com)
+
+
+
+

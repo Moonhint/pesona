@@ -5,12 +5,12 @@ The x-button component replaces the standard html button with a material design 
 
 ## Usage
 
-#### [Simple Button](/?path=/story/ondevelopment-button--button)
+##### [Simple Button](/?path=/story/ondevelopment-button--button)
 ```html
 <x-button> button </x-button>
 ```
 
-#### [Button with Router](/?path=/story/ondevelopment-button--button-with-router)
+##### [Button with Router](/?path=/story/ondevelopment-button--button-with-router)
 ```html
 <div>
   <router-view/>

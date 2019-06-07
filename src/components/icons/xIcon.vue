@@ -70,10 +70,17 @@
     computed:{
       pathValue(){
         let index = -1;
+        let self = this;
         if (this.mode === "font-awesome"){
-          index = fontAwesome.selection.findIndex((n) => n.name === this.name);
+          index = fontAwesome.selection.findIndex((n) => {
+            let parts = n.name.split(",").map(n => n.trim());
+            return (parts.indexOf(self.name) === -1) ? false : true;
+          });
         }else if (this.mode === "material-icons"){
-          index = materialIcons.selection.findIndex((n) => n.ligatures === this.name);
+          index = materialIcons.selection.findIndex((n) => {
+            let parts = n.ligatures.split(",").map(n => n.trim());
+            return (parts.indexOf(self.name) === -1) ? false : true;
+          });
         }
 
         if (index === -1){
