@@ -5,7 +5,7 @@
         <x-icon :mode="iconMode" :name="icon" xxlarge padding="0"/>
       </div>
       <div class="item text" :style="textStyle">
-        <span v-if="isWarped">wraped</span>
+        <span v-show="isWarped">wraped</span>
         <slot></slot>
       </div>
     </div>
@@ -43,13 +43,12 @@
     },
     mounted(){
       let parentElName = this.$el.parentElement.parentElement.parentElement.className;
-      if (parentElName === 'pesona-sidenav-list'){
+      if (parentElName.includes('pesona-sidenav-list')){
         this.isWarped = true;
       }
     },
     methods: {
       containerClicked(ev) {
-        console.info("list item clicked");
         this.$emit('click', ev);
       }
     }
@@ -77,5 +76,8 @@
     .container:hover {
       background-color: red;
     }
+  }
+  .active {
+    background-color: grey;
   }
 </style>

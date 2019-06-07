@@ -11,7 +11,7 @@
           <x-icon class="open-nav" v-if="state === 'close'" mode="material-icons" name="keyboard_arrow_right" xlarge/>
         </div>
       </div>
-      <div class="content" v-if="state === 'open' || state === 'shrink'">
+      <div @click="eventBubble" class="content" v-if="state === 'open' || state === 'shrink'">
         <slot></slot>
       </div>
     </div>
@@ -20,7 +20,7 @@
 
 <script>
   import xIcon from './../icons/xIcon'; 
-  // TODO integrate with list
+  // TODO style it outt
   // TODO responsive
   // TODO media query for shrink open and close
   export default {
@@ -45,11 +45,15 @@
     },
     data() {
       return {
-        state: 'open'
+        state: 'open',
+        sideNavItem: undefined,
+        sideNavList: undefined
       };
     },
     mounted(){
-
+      let sideNav = this.$el;
+      this.sideNavItem = sideNav.getElementsByClassName('pesona-sidenav-item');
+      this.sideNavList = sideNav.getElementsByClassName('pesona-sidenav-list');
     },
     methods: {
       navActionClicked(){
@@ -61,6 +65,40 @@
           this.state = 'open';
         }
         this.$emit('stateChange', this.state);
+      },
+      eventBubble(ev){
+        if (this.state === 'open'){
+          let element = ev.target;
+          let foundElement = false; 
+          while (!foundElement){
+            let includeItem = element.className.includes('pesona-sidenav-item');
+            let includeList = element.className.includes('pesona-sidenav-list');
+            if (includeItem || includeList){
+              this.removeAllActiveElement();
+              element.className = `${element.className} active`;
+              foundElement = true;
+            }else{
+              if ((element.tagName === 'HTML') ||
+                  (element.tagName === 'DIV' && element.className === 'pesona-sidenav')){
+                break;
+              }
+              element = element.parentElement;
+            }
+          }
+
+        }
+      },
+      removeAllActiveElement(){
+        if (this.sideNavItem){
+          for (let i=0; i < this.sideNavItem.length; i++){
+            this.sideNavItem[i].className = this.sideNavItem[i].className.split(' ')[0];
+          }
+        }
+        if (this.sideNavList){
+          for (let i=0; i < this.sideNavList.length; i++){
+            this.sideNavList[i].className = this.sideNavList[i].className.split(' ')[0];
+          }
+        }
       }
     }
   }

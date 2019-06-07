@@ -24,11 +24,16 @@ const Page2 = {
   template: '<h1>Page 2</h1>'
 };
 
+const Page3 = {
+  template: '<h1>Page 3</h1>'
+};
+
 storiesOf('OnDevelopment|Layout', module)
   .addDecorator(StoryRouter({}, {
     routes: [
       { path: '/', component: Page1 },
-      { path: '/page2', component: Page2 }
+      { path: '/page2', component: Page2 },
+      { path: '/page3', component: Page3 }
     ]
   }))
   .add('layout', () => ({
@@ -78,12 +83,18 @@ storiesOf('OnDevelopment|Layout', module)
     },
     template: `
       <x-lo-dashboard>
-        <x-sidenav slot="sidenav">
-          <img slot="logo" :src="logoImg"></img>
-          <div>Main Navigation</div>
-          <x-sidenav-item :icon="'menu'"> home </x-sidenav-item>
 
-          <x-sidenav-list :icon="'menu'" text="List Me">
+        <x-sidenav slot="sidenav">
+
+          <img slot="logo" :src="logoImg"></img>
+
+          <div>Main Navigation</div>
+          <x-sidenav-item icon='menu'> 
+            <router-link to="/page3">
+              To Page 3
+            </router-link>
+          </x-sidenav-item>
+          <x-sidenav-list icon='menu' text='List Me'>
             <x-sidenav-item> 
               <router-link to="/">
                 To Page 1
@@ -97,13 +108,28 @@ storiesOf('OnDevelopment|Layout', module)
           </x-sidenav-list>
 
           <div>Secondary Navigation</div>
-          <x-sidenav-item :icon="'menu'"> home 2 </x-sidenav-item>
+          <x-sidenav-item icon='menu'> home 2 </x-sidenav-item>
+          <x-sidenav-list icon='menu' text='List Me'>
+            <x-sidenav-item> 
+              <router-link to="/">
+                To Page 1
+              </router-link>
+            </x-sidenav-item>
+            <x-sidenav-item> 
+              <router-link to="/page2">
+                To Page 2
+              </router-link>
+            </x-sidenav-item>
+          </x-sidenav-list>
 
         </x-sidenav>
+
         <x-toolbar slot="toolbar"></x-toolbar>
+
         <div slot="content">
           <router-view/>
         </div>
+        
       </x-lo-dashboard>
     `,
     methods: { 
