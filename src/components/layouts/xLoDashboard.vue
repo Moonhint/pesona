@@ -51,13 +51,9 @@
         }
 
         .content {
+          margin: 1.5rem;
           border: 1px solid red;
         }
-
-        // .overcontent {
-        //   height: 1000px;
-        //   background-color: grey;
-        // }
 
         .footer {
           height: 200px;

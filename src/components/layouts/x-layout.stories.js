@@ -11,6 +11,7 @@ import xNavbar from './xNavbar';
 import xSidenav from './xSidenav';
 import xSidenavItem from './xSidenavItem';
 import xSidenavList from './xSidenavList';
+import xSidenavTitle from './xSidenavTitle';
 import xToolbar from './xToolbar';
 import xColorPanel from './../panels/xColorPanel';
 import xIcon from './../icons/xIcon';
@@ -73,7 +74,8 @@ storiesOf('OnDevelopment|Layout', module)
   .add('layout dashboard', () => ({
     components: { 
       xLoDashboard, xSidenav, 
-      xSidenavItem, xSidenavList, 
+      xSidenavItem, xSidenavList,
+      xSidenavTitle, 
       xToolbar, xColorPanel,
       xIcon },
     data: () => {
@@ -88,7 +90,7 @@ storiesOf('OnDevelopment|Layout', module)
 
           <img slot="logo" :src="logoImg"></img>
 
-          <div>Main Navigation</div>
+          <x-sidenav-title>Main Navigation</x-sidenav-title>
           <x-sidenav-item icon='menu'> 
             <router-link to="/page3">
               To Page 3
@@ -107,7 +109,7 @@ storiesOf('OnDevelopment|Layout', module)
             </x-sidenav-item>
           </x-sidenav-list>
 
-          <div>Secondary Navigation</div>
+          <x-sidenav-title>Secondary Navigation</x-sidenav-title>
           <x-sidenav-item icon='menu'> home 2 </x-sidenav-item>
           <x-sidenav-list icon='menu' text='List Me'>
             <x-sidenav-item> 
@@ -129,7 +131,7 @@ storiesOf('OnDevelopment|Layout', module)
         <div slot="content">
           <router-view/>
         </div>
-        
+
       </x-lo-dashboard>
     `,
     methods: { 

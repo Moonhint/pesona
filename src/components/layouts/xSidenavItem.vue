@@ -5,7 +5,6 @@
         <x-icon :mode="iconMode" :name="icon" xxlarge padding="0"/>
       </div>
       <div class="item text" :style="textStyle">
-        <span v-show="isWarped">wraped</span>
         <slot></slot>
       </div>
     </div>
@@ -42,7 +41,7 @@
       };
     },
     mounted(){
-      let parentElName = this.$el.parentElement.parentElement.parentElement.className;
+      let parentElName = this.$el.parentElement.parentElement.className;
       if (parentElName.includes('pesona-sidenav-list')){
         this.isWarped = true;
       }
@@ -58,6 +57,8 @@
 <style lang="scss" scoped>
   .pesona-sidenav-item{
     .container {
+      border-radius: 5px;
+      padding: 0 8px;
       width: 100%;
 
       .item {
@@ -69,15 +70,20 @@
       }
 
       .text {
-
+        padding-left: 4px;
+        a {
+          text-decoration: none;
+          color: #000;
+        }
       }
     }
 
     .container:hover {
-      background-color: red;
+      background-color: #007bff;
     }
   }
+
   .active {
-    background-color: grey;
+    font-weight: 600;
   }
 </style>

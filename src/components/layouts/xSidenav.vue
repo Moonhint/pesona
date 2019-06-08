@@ -19,12 +19,14 @@
 </template>
 
 <script>
+  import dataTypeMixin from 'mixins/dataTypeMixin';
   import xIcon from './../icons/xIcon'; 
   // TODO style it outt
   // TODO responsive
   // TODO media query for shrink open and close
   export default {
     components: { xIcon },
+     mixins: [dataTypeMixin],
     name: 'x-sidenav',
     props: {
       height: {
@@ -67,13 +69,30 @@
         this.$emit('stateChange', this.state);
       },
       eventBubble(ev){
+        let self = this;
         if (this.state === 'open'){
           let element = ev.target;
-          let foundElement = false; 
+          let foundElement = false;
+
           while (!foundElement){
-            let includeItem = element.className.includes('pesona-sidenav-item');
-            let includeList = element.className.includes('pesona-sidenav-list');
-            if (includeItem || includeList){
+            let includeItem = false;
+            let includeList = false;
+            let isUnfold = false;
+
+            if (self._isString(element.className)){
+              includeItem = element.className.includes('pesona-sidenav-item');
+              includeList = element.className.includes('pesona-sidenav-list');
+              isUnfold = element.className.includes('unfold');
+            }
+
+            if (includeList && isUnfold){
+              element.className = 'pesona-sidenav-list';
+              foundElement = true;
+            }else if (includeList){
+              this.removeAllUnfoldElement();
+              element.className = `${element.className} unfold`;
+              foundElement = true;
+            }else if (includeItem){
               this.removeAllActiveElement();
               element.className = `${element.className} active`;
               foundElement = true;
@@ -94,6 +113,8 @@
             this.sideNavItem[i].className = this.sideNavItem[i].className.split(' ')[0];
           }
         }
+      },
+      removeAllUnfoldElement(){
         if (this.sideNavList){
           for (let i=0; i < this.sideNavList.length; i++){
             this.sideNavList[i].className = this.sideNavList[i].className.split(' ')[0];
@@ -106,6 +127,9 @@
 
 <style lang="scss" scoped>
   .pesona-sidenav{
+    font-family: sans-serif;
+    font-size: 14.0833px;
+    font-weight: 400;
     .container {
       // width: 280px;
 
@@ -138,7 +162,7 @@
       }
 
       .content {
-
+        margin: 0 1.5rem 1.5rem;
       }
     }
   }
