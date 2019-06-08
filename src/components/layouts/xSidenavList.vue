@@ -72,14 +72,20 @@
       justify-content: space-around;
       border-radius: 5px;
       padding: 0 8px;
+      cursor: pointer;
+      user-select: none;
 
       .icon {
-        
+        opacity: .3;
       }
 
       .text {
         flex-grow: 2;
         padding-left: 8px;
+      }
+
+      .indicator {
+        opacity: .3;
       }
     }
     .container:hover {

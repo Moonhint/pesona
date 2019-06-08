@@ -108,6 +108,18 @@ storiesOf('OnDevelopment|Layout', module)
               </router-link>
             </x-sidenav-item>
           </x-sidenav-list>
+          <x-sidenav-list icon='menu' text='List Me'>
+            <x-sidenav-item> 
+              <router-link to="/">
+                To Page 1
+              </router-link>
+            </x-sidenav-item>
+            <x-sidenav-item> 
+              <router-link to="/page2">
+                To Page 2
+              </router-link>
+            </x-sidenav-item>
+          </x-sidenav-list>
 
           <x-sidenav-title>Secondary Navigation</x-sidenav-title>
           <x-sidenav-item icon='menu'> home 2 </x-sidenav-item>

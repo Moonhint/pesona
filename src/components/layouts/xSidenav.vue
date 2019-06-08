@@ -20,13 +20,14 @@
 
 <script>
   import dataTypeMixin from 'mixins/dataTypeMixin';
+  import styleMixin from 'mixins/styleMixin';
   import xIcon from './../icons/xIcon'; 
   // TODO style it outt
   // TODO responsive
   // TODO media query for shrink open and close
   export default {
     components: { xIcon },
-     mixins: [dataTypeMixin],
+    mixins: [dataTypeMixin, styleMixin],
     name: 'x-sidenav',
     props: {
       height: {
@@ -131,13 +132,12 @@
     font-size: 14.0833px;
     font-weight: 400;
     .container {
-      // width: 280px;
-
+      
       .header {
         height: 60px;
         line-height: 90px;
-        padding: 0 4px;
-        background-color: red;
+        padding: 0 22px;
+        background-color: var(--pesona-brand-color-secondary);
 
         .logo {
           display: inline;
@@ -162,7 +162,7 @@
       }
 
       .content {
-        margin: 0 1.5rem 1.5rem;
+        margin: 0 1.5rem 0 1.5rem;
       }
     }
   }
