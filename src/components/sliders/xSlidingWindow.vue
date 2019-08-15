@@ -7,7 +7,7 @@
       <div class="side-nav side-nav--left" v-if="!hideSideNavigation" :style="{ height: adjustedHeightValue }" @click="goToPrevIndex">
         <x-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
       </div>
-      <div class="item-container" :style="{ height: slotHeight }">
+      <div class="item-container" :style="{ height: slotHeight,  border: borderColor }">
         <div class="sliding-glass" :style="slideTranslateObj">
           <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
           <template v-if="!slotMode">
@@ -88,6 +88,12 @@
         type: String,
         default: "#000"
       },
+      // border color
+      borderColor: {
+        type: String,
+        default: "1px solid #000"
+      },
+
       // items per slide
       itemsPerSlide: {
         type: Number,
@@ -267,7 +273,7 @@
       white-space: nowrap;
       width: 100%;
       // height: 300px;
-      border: 1px solid black;
+      // border: 1px solid black;
 
       .sliding-glass {
         font-size: 0;

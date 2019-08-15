@@ -56,6 +56,7 @@
       width: inherit;
       height: inherit;
       object-fit: cover;
+      vertical-align: unset;
     }
     &--background-color {
       width: inherit;
