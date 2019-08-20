@@ -35,7 +35,7 @@ storiesOf('OnDevelopment|SlidingWindow', module)
             name: 'some item 2'
           }
         ]
-      }, 3000)
+      }, 10000)
     },
     data: () => {
       return {

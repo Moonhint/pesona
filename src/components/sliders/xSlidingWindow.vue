@@ -230,7 +230,7 @@
           if (!this.slotCheckingInterval){
             this.slotCheckingInterval = setInterval(()=>{
                 this.lockItemDimension();
-            }, 500);
+            }, 1);
           }
         }else{
           if (this.slotCheckingInterval){
