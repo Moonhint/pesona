@@ -1,6 +1,6 @@
 {
   "name": "pesona",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "scripts": {
     "lib": "vue-cli-service build --target lib --name pesona ./src/main.js",
     "storybook": "start-storybook -p 6006",
@@ -58,9 +58,7 @@
     }
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
+    "last 40 versions"
   ],
   "repository": {
     "type": "git",

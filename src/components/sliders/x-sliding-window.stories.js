@@ -22,28 +22,41 @@ storiesOf('OnDevelopment|SlidingWindow', module)
   }))
   .add('sliding-window with slots', () => ({
     components: { xSlidingWindow, xSlidingWindowItem },
+    mounted(){
+      let self = this;
+      setTimeout(()=>{
+        self.images = [
+          {
+            image: 'https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg',
+            name: 'some item 1'
+          },
+          {
+            image: 'https://cdn.pixabay.com/photo/2016/10/22/17/46/scotland-1761292_960_720.jpg',
+            name: 'some item 2'
+          }
+        ]
+      }, 3000)
+    },
+    data: () => {
+      return {
+        images: undefined
+      }
+    },
     template: `<x-sliding-window slot-mode
                   @item-click="itemClick"
                   :slot-width="'200px'"
                   :slot-height="'200px'"
                   :items-per-slide="1">
                   
-                  <x-sliding-window-item :background-image="'https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg'">
-                    some item 1
-                  </x-sliding-window-item>
-                  <x-sliding-window-item :background-color="'grey'">
-                    some item 2
-                  </x-sliding-window-item>
-                  <x-sliding-window-item :background-color="'red'">
-                    some item 2
-                  </x-sliding-window-item>
-                  <x-sliding-window-item :background-image="'https://cdn.pixabay.com/photo/2016/10/22/17/46/scotland-1761292_960_720.jpg'">
-                    some item 3
+                  <x-sliding-window-item v-for="(img, index) in images" :key="index" :background-image="img.image">
+                    {{img.name}}
                   </x-sliding-window-item>
 
                </x-sliding-window>`,
-    methods: { 
-      itemClick: action('itemClick') 
+    methods: {
+      itemClick(){
+        console.info("click")
+      }
     },
   }))
   .add('auto sliding-window', () => ({

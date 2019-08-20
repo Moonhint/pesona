@@ -176,7 +176,8 @@
         slotItems: [],
         swipeDetector: undefined,
         autoSlideDirection: "right",
-        autoSlideTimer: undefined
+        autoSlideTimer: undefined,
+        slotCheckingInterval: undefined
       };
     },
     mounted(){
@@ -223,13 +224,25 @@
         })
       },
       lockItemDimension(){
+        //TODO: find more effecient solution
         this.slotItems = this.$el.getElementsByClassName('pesona-sliding-window-item');
-
-        for (let i = 0; i < this.slotItems.length; i++){
-          let element = this.slotItems[i];
-          element.style.width = this.slotWidth;
-          element.style.height = this.slotHeight;
-          element.style.marginRight = this.slotGap;
+        if (this.slotItems.length === 0){
+          if (!this.slotCheckingInterval){
+            this.slotCheckingInterval = setInterval(()=>{
+                this.lockItemDimension();
+            }, 500);
+          }
+        }else{
+          if (this.slotCheckingInterval){
+            clearInterval(this.slotCheckingInterval);
+            this.slotCheckingInterval = undefined;
+          }
+          for (let i = 0; i < this.slotItems.length; i++){
+            let element = this.slotItems[i];
+            element.style.width = this.slotWidth;
+            element.style.height = this.slotHeight;
+            element.style.marginRight = this.slotGap;
+          }
         }
       },
       childNavigatorClicked(index){
