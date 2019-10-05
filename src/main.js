@@ -5,6 +5,10 @@ import xIcon from './components/icons/xIcon.vue';
 import xColorPanel from './components/panels/xColorPanel.vue';
 import xSlidingWindow from './components/sliders/xSlidingWindow.vue';
 import xSlidingWindowItem from './components/sliders/xSlidingWindowItem.vue';
+import xSideNav from './components/sidenavs/xSideNav.vue';
+import xSidenavItem from './components/sidenavs/xSidenavItem.vue';
+import xSidenavList from './components/sidenavs/xSidenavList.vue';
+import xSidenavTitle from './components/sidenavs/xSidenavTitle.vue';
 
 const componentCatalog = [
   xTheme,
@@ -13,7 +17,11 @@ const componentCatalog = [
   xIcon,
   xColorPanel,
   xSlidingWindow,
-  xSlidingWindowItem
+  xSlidingWindowItem,
+  xSideNav,
+  xSidenavItem,
+  xSidenavList,
+  xSidenavTitle
 ]
 
 const install = function (Vue) {
@@ -29,7 +37,11 @@ export {
   xIcon,
   xColorPanel,
   xSlidingWindow,
-  xSlidingWindowItem
+  xSlidingWindowItem,
+  xSideNav,
+  xSidenavItem,
+  xSidenavList,
+  xSidenavTitle
 }
 
 export default install

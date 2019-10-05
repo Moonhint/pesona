@@ -1,13 +1,13 @@
 <template>
   <div class="pesona-sidenav-list">
-    <div class="container">
-      <div class="icon" v-if="icon">
+    <div class="container" :class="[state]">
+      <div class="icon" v-if="icon && state !== 'shrink'">
         <x-icon :mode="iconMode" :name="icon" xxlarge padding="0"/>
       </div>
       <div class="text" :class="{ 'bolder': showList }">
         {{ text }}
       </div>
-      <div class="indicator">
+      <div v-if="state !== 'shrink'" class="indicator">
         <x-icon v-if="showList" mode='material-icons' name='keyboard_arrow_up' large padding="0"/>
         <x-icon v-if="!showList" mode='material-icons' name='keyboard_arrow_down' large padding="0"/>
       </div>
@@ -26,7 +26,7 @@
     props: {
       icon: {
         type: String,
-        default: ''
+        default: 'help'
       },
       iconMode: {
         type: String,
@@ -42,23 +42,33 @@
     },
     data() {
       return {
-        showList: false
+        showList: false,
+        state: 'open'
       };
     },
     mounted(){
       let self = this;
       setInterval(()=>{
-        if (self.anyUnfoldClass(self.$el)){
+        if (self.state === 'shrink'){
+          self.$emit('stateChange', 'shrink');
           self.showList = true;
         }else{
-          self.showList = false;
+          if (self.anyUnfoldClass(self.$el)){
+            self.showList = true;
+          }else{
+            self.showList = false;
+          }
         }
-      }, 500);
+      }, 200);
+      this.$parent.$on('stateChange', this.changeInternalState)
     },
     methods: {
       anyUnfoldClass(el){
         return el.className.split(' ').indexOf('unfold') === -1 ? false : true;
       },
+      changeInternalState(state){
+        this.state = state;
+      }
     }
   }
 </script>
@@ -71,7 +81,8 @@
       align-items: center;
       justify-content: space-around;
       border-radius: 5px;
-      padding: 0 8px;
+      padding: 4px 8px;
+      margin: 0 4%;
       cursor: pointer;
       user-select: none;
 
@@ -90,6 +101,16 @@
     }
     .container:hover {
       background-color: #007bff;
+    }
+
+    .shrink {
+      .text {
+        font-size: 10px;
+        font-weight: 400;
+      }
+    }
+    .shrink:hover {
+      background-color: #fff;
     }
   }
 

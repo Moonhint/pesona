@@ -45,6 +45,12 @@
         <span class="hex" @click="copyToClipBoard">{{colors.actions.info}}</span>
       </div>
     </div>
+    <div class="area form-area">
+      <p> Form Colors </p>
+      <div class="color-band frame"> Frame 
+        <span class="hex" @click="copyToClipBoard">{{colors.forms.frame}}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -87,6 +93,10 @@
             error: "",
             warning: "",
             info: ""  
+          },
+          forms: {
+            frame: "",
+            text: "",
           }
         }
       }
@@ -127,7 +137,7 @@
   }
 
   .brand-area {
-    flex-basis: 40%;
+    flex-basis: 20%;
     .primary {
       background-color: var(--pesona-brand-color-primary);
       color: var(--pesona-on-color-primary);
@@ -171,7 +181,7 @@
   }
 
   .action-area {
-    flex-basis: 40%;
+    flex-basis: 20%;
     .success {
       background-color: var(--pesona-action-color-success);
       color: var(--pesona-on-color-success);
@@ -187,6 +197,14 @@
     .info {
       background-color: var(--pesona-action-color-info);
       color: var(--pesona-on-color-info);
+    }
+  }
+
+  .form-area {
+    flex-basis: 20%;
+    .frame {
+      border: 2px solid var(--pesona-form-color-frame);
+      color: var(--pesona-form-color-text);
     }
   }
 

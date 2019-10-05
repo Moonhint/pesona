@@ -25,7 +25,11 @@ export default {
         onSuccess: "#000",
         onError: "#FFF",
         onWarning: "#000",
-        onInfo: "#000"
+        onInfo: "#000",
+
+        // form
+        formFrame: "#336B87",
+        formText: "#000",
       }
     };
   },
@@ -49,6 +53,8 @@ export default {
     document.documentElement.style.setProperty("--pesona-on-color-error", this.xPESONA_COLORS.onError);
     document.documentElement.style.setProperty("--pesona-on-color-warning", this.xPESONA_COLORS.onWarning);
     document.documentElement.style.setProperty("--pesona-on-color-info", this.xPESONA_COLORS.onInfo);
+    document.documentElement.style.setProperty("--pesona-form-color-frame", this.xPESONA_COLORS.formFrame);
+    document.documentElement.style.setProperty("--pesona-form-color-text", this.xPESONA_COLORS.formText);
   },
   methods: {
     _setLocalCssVariables(variables){
@@ -138,7 +144,11 @@ export default {
             error: element.style.getPropertyValue("--pesona-on-color-error"),
             warning: element.style.getPropertyValue("--pesona-on-color-warning"),
             info: element.style.getPropertyValue("--pesona-on-color-info")  
-          }
+          },
+          forms: {
+            frame: element.style.getPropertyValue("--pesona-form-color-frame"),
+            text: element.style.getPropertyValue("--pesona-form-color-text"),
+          },
         }
       }else{
         return {};

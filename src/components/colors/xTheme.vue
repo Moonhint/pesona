@@ -30,6 +30,12 @@
         default: () => {
           return {}
         }
+      },
+      formColors: {
+        type: Object,
+        default: () => {
+          return {}
+        }
       }
     },
     data: () => {
@@ -71,6 +77,11 @@
           onError: this.actionColors.onError || this.xPESONA_COLORS.onError,       
         }
 
+        let formColors = {
+          frame: this.formColors.frame || this.xPESONA_COLORS.brandFrame,
+          text: this.formColors.text || this.xPESONA_COLORS.brandText,
+        }
+
         this._setLocalCssVariables({
           '--pesona-brand-color-primary': brandColors.primary,
           '--pesona-brand-color-secondary': brandColors.secondary,
@@ -91,6 +102,8 @@
           '--pesona-on-color-error': actionColors.onError,
           '--pesona-on-color-warning': actionColors.onWarning,
           '--pesona-on-color-info': actionColors.onInfo,
+          '--pesona-form-color-frame': formColors.frame,
+          '--pesona-form-color-text': formColors.text,
         });
 
         this.componentKey++;

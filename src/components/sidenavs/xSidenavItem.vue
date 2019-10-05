@@ -1,10 +1,13 @@
 <template>
   <div class="pesona-sidenav-item">
-    <a class="container" @click="containerClicked" :class="{ 'wraped': isWarped }">
+    <a class="container" @click="containerClicked" :class="{ 
+        'wraped': (isWarped && !isShrink), 
+        'shrink': isShrink
+      }">
       <div class="item icon" v-if="icon">
         <x-icon :mode="iconMode" :name="icon" xxlarge padding="0"/>
       </div>
-      <div class="item text" :style="textStyle">
+      <div v-if="state === 'open'" class="item text" :style="textStyle">
         <slot></slot>
       </div>
     </a>
@@ -19,7 +22,7 @@
     props: {
       icon: {
         type: String,
-        default: ''
+        default: 'help'
       },
       iconMode: {
         type: String,
@@ -29,14 +32,18 @@
     computed: {
       textStyle() {
         let style = {};
-        if (!this.isWarped) {
+        // if (!this.isWarped) {
           style.transform = 'translateY(-10px)';
-        }
+        // }
         return style;
+      },
+      isShrink() {
+        return this.state === 'shrink' ? true : false;
       }
     },
     data() {
       return {
+        state: 'open',
         isWarped: false
       };
     },
@@ -52,10 +59,14 @@
         // ancorElement[0].className = "router-link-exact-active router-link-active container";
         // ancorElement[0].__vue__ = ancorElement[1].__vue__;
       }
+      this.$parent.$on('stateChange', this.changeInternalState)
     },
     methods: {
       containerClicked(ev) {
         this.$emit('click', ev);
+      },
+      changeInternalState(state){
+        this.state = state;
       }
     }
   }
@@ -66,8 +77,8 @@
     .container {
       display: block;
       border-radius: 5px;
-      padding: 0 8px;
-      width: 93%;
+      padding: 4px 8px;
+      margin: 0 4%;    
 
       .item {
         display: inline-block;
@@ -93,6 +104,11 @@
 
     .container:hover {
       background-color: #007bff;
+    }
+
+    .shrink {
+      text-align: center;
+      margin: 10px;
     }
   }
 

@@ -88,6 +88,12 @@ storiesOf('OnDevelopment|Theme', module)
       shadeWhite: {
         default: colorUtil.toHex(color('White', "#FFFFFF", 'Shade Colors'))
       },
+      formFrame: {
+        default: colorUtil.toHex(color('Frame', "#336B87", 'Form Colors'))
+      },
+      formText: {
+        default: colorUtil.toHex(color('Text', "#90AFC5", 'Form Colors'))
+      }
     },
     template: `
       <x-theme :brand-colors="{
@@ -116,6 +122,11 @@ storiesOf('OnDevelopment|Theme', module)
                   gray: shadeGray,
                   semiWhite: shadeSemiWhite,
                   white: shadeWhite
+               }"
+              
+               :form-colors="{
+                  frame: formFrame,
+                  text: formText,
                }">
                 
         <x-color-panel/>

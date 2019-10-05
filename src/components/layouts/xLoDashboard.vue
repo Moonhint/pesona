@@ -40,12 +40,11 @@
     .container {
       height: 100vh;
       display: grid;
-      border: 1px solid red;
       grid-template-columns: fit-content(280px) auto;
       grid-template-rows: auto;
 
       .side-nav {
-        overflow-y: auto;
+        overflow-y: hidden;
         box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
       }
 
@@ -63,7 +62,6 @@
 
         .content {
           margin: 1.5rem;
-          border: 1px solid red;
         }
 
         .footer {

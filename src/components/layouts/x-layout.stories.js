@@ -8,10 +8,10 @@ import xLayout from './xLayout';
 import xLoCenter from './xLoCenter';
 import xLoDashboard from './xLoDashboard';
 import xNavbar from './xNavbar';
-import xSidenav from './xSidenav';
-import xSidenavItem from './xSidenavItem';
-import xSidenavList from './xSidenavList';
-import xSidenavTitle from './xSidenavTitle';
+import xSidenav from './../sidenavs/xSidenav';
+import xSidenavItem from './../sidenavs/xSidenavItem';
+import xSidenavList from './../sidenavs/xSidenavList';
+import xSidenavTitle from './../sidenavs/xSidenavTitle';
 import xToolbar from './xToolbar';
 import xColorPanel from './../panels/xColorPanel';
 import xIcon from './../icons/xIcon';
@@ -80,13 +80,13 @@ storiesOf('OnDevelopment|Layout', module)
       xIcon },
     data: () => {
       return {
-        logoImg: 'https://place-hold.it/200x50.png'
+        logoImg: 'https://place-hold.it/50x50.png'
       }
     },
     template: `
       <x-lo-dashboard>
 
-        <x-sidenav slot="sidenav">
+        <x-sidenav slot="sidenav" with-search>
 
           <img slot="logo" :src="logoImg"></img>
 
@@ -97,24 +97,24 @@ storiesOf('OnDevelopment|Layout', module)
             </router-link>
           </x-sidenav-item>
           <x-sidenav-list icon='menu' text='List Me'>
-            <x-sidenav-item> 
+            <x-sidenav-item icon='menu'> 
               <router-link to="/">
                 To Page 1
               </router-link>
             </x-sidenav-item>
-            <x-sidenav-item> 
+            <x-sidenav-item icon='menu'> 
               <router-link to="/page2">
                 To Page 2
               </router-link>
             </x-sidenav-item>
           </x-sidenav-list>
           <x-sidenav-list icon='menu' text='List Me'>
-            <x-sidenav-item> 
+            <x-sidenav-item icon='menu'> 
               <router-link to="/">
                 To Page 1
               </router-link>
             </x-sidenav-item>
-            <x-sidenav-item> 
+            <x-sidenav-item icon='menu'> 
               <router-link to="/page2">
                 To Page 2
               </router-link>
@@ -122,14 +122,18 @@ storiesOf('OnDevelopment|Layout', module)
           </x-sidenav-list>
 
           <x-sidenav-title>Secondary Navigation</x-sidenav-title>
-          <x-sidenav-item icon='menu'> home 2 </x-sidenav-item>
-          <x-sidenav-list icon='menu' text='List Me'>
-            <x-sidenav-item> 
+          <x-sidenav-item icon='menu'>
+            <router-link to="/page3">
+              home 2
+            </router-link>
+          </x-sidenav-item>
+          <x-sidenav-list icon='menu' text='List Me' v-for="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, 16, 17, 18]">
+            <x-sidenav-item icon='menu'> 
               <router-link to="/">
                 To Page 1
               </router-link>
             </x-sidenav-item>
-            <x-sidenav-item> 
+            <x-sidenav-item icon='menu'> 
               <router-link to="/page2">
                 To Page 2
               </router-link>

@@ -1,0 +1,16 @@
+.simplebar-scrollbar {
+  position: absolute;
+  right: 2px;
+  width: 4px;
+  min-height: 10px;
+}
+.simplebar-scrollbar:before {
+  position: absolute;
+  content: '';
+  background: var(--pesona-brand-color-secondary);
+  border-radius: 7px;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}

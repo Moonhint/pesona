@@ -30,6 +30,7 @@ storiesOf('OnDevelopment|Input & Control', module)
           :placeholder="placeholder">
         </x-text-field>
         <x-text-field
+          prepend-icon-name="search"
           @click="logModel"
           v-model="binder" 
           :label="label">
