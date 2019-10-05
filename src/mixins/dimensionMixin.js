@@ -69,6 +69,19 @@ export default {
       inHalfValue = Math.floor(halfValue/2);
       return `${halfValue+inHalfValue}px`;
     },
+    _normalizeQuarterValue: function(size) {
+      let templateValue = this.xPESONA_SIZE_VALUE[size.toUpperCase()];
+      if (templateValue){
+        return `${Math.floor(parseInt(templateValue)/4)}px`;
+      }else{
+        let sizeValue = parseInt(size);
+        if (sizeValue){
+          return `${Math.floor(sizeValue/4)}px`;
+        }else{
+          return `${Math.floor(parseInt(this.xPESONA_SIZE_VALUE.BASE)/4)}px`;
+        }
+      }
+    },
     _normalizeDoubleValue: function(size) {
       let templateValue = this.xPESONA_SIZE_VALUE[size.toUpperCase()];
       if (templateValue){

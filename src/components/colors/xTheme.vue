@@ -110,7 +110,7 @@
       }
     },
     watch: {
-      brandColors: function (val) {
+      brandColors: function () {
         this.setColors();
       }
     }

@@ -39,6 +39,7 @@ storiesOf('OnDevelopment|Button', module)
                     :block="block"
                     :disabled="disabled"
                     :ghost="ghost"
+                    :no-border="noBorder"
                     :shape="shape"
                     :texture="texture">
                   {{content}}
@@ -73,6 +74,9 @@ storiesOf('OnDevelopment|Button', module)
       },
       ghost: {
         default: boolean('Ghost', false, 'Effect')
+      },
+      noBorder: {
+        default: boolean('No Border', false, 'Effect')
       },
       schemaSelect: {
         default: select('Schema Option', {
@@ -185,5 +189,51 @@ storiesOf('OnDevelopment|Button', module)
     methods: { 
       action: action('clicked'),
     },
-  }));
+  }))
+  .add('button with dropdown', () => ({
+    components: { xButton, xIcon },
+    props: {
+
+    },
+    template: ` <div>
+                  <router-view/>
+                  <x-button dropdown>
+                    <div slot="options">
+                      <router-link to="/">
+                        To Page 1
+                      </router-link>
+                      <router-link to="/page2">
+                        To Page 2
+                      </router-link>
+                    </div>
+                    Pages
+                  </x-button>
+                </div>`,
+    methods: { 
+      action: action('clicked'),
+    },
+  }))
+  .add('icon button with dropdown', () => ({
+    components: { xButton, xIcon },
+    props: {
+
+    },
+    template: ` <div>
+                  <router-view/>
+                  <x-button dropdown no-border>
+                    <div slot="options">
+                      <router-link to="/">
+                        To Page 1
+                      </router-link>
+                      <router-link to="/page2">
+                        To Page 2
+                      </router-link>
+                    </div>
+                    <x-icon name="user-circle" medium padding="0"/>
+                  </x-button>
+                </div>`,
+    methods: { 
+      action: action('clicked'),
+    },
+  }))
 

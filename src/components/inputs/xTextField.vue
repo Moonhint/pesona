@@ -23,7 +23,7 @@
         ref="customInput" 
         @input="emitInputed"
         @focusin="focusChange"
-        @focusout="focusChange"></input>
+        @focusout="focusChange"/>
       
     </div>
   </div>

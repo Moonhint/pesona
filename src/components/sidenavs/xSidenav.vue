@@ -34,10 +34,10 @@
   // TODO size (auto / overwrite)
   // TODO mode (push, over)
   // TODO backdrop (true, false)
-  // TODO style it outt
   // TODO responsive
   // TODO media query for shrink open and close
-  // TODO style search input
+  // TODO: make non icon navbar items and item list
+
   export default {
     components: { xIcon, xTextField },
     mixins: [dataTypeMixin, styleMixin],
@@ -95,7 +95,7 @@
               }
             });
           })
-          .catch(error => 'An error occurred while loading the perfect-scrollbar component');
+          .catch(error => `An error (${error.message}) occurred while loading the perfect-scrollbar component`);
       },
       navActionClicked(){
         if (this.state === 'open'){
@@ -167,7 +167,6 @@
         let el = self.$el;
         let aArray = el.getElementsByClassName('pesona-sidenav-item');
 
-        let arr = [];
         for (let i = 0; i < aArray.length; i++){
           aArray[i].style.display = "block";
           let getText = aArray[i].getElementsByClassName('text')[0].innerText.toLowerCase();

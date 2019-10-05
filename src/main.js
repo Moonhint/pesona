@@ -5,6 +5,7 @@ import xIcon from './components/icons/xIcon.vue';
 import xColorPanel from './components/panels/xColorPanel.vue';
 import xSlidingWindow from './components/sliders/xSlidingWindow.vue';
 import xSlidingWindowItem from './components/sliders/xSlidingWindowItem.vue';
+import xLayoutTopDown from './components/layouts/xLayoutTopDown.vue';
 import xLoCenter from './components/layouts/xLoCenter.vue';
 import xLoDashboard from './components/layouts/xLoDashboard.vue';
 import xSidenav from './components/sidenavs/xSidenav.vue';
@@ -20,6 +21,7 @@ const componentCatalog = [
   xColorPanel,
   xSlidingWindow,
   xSlidingWindowItem,
+  xLayoutTopDown,
   xLoCenter,
   xLoDashboard,
   xSidenav,

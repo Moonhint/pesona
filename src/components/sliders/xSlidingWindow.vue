@@ -216,10 +216,10 @@
         let self = this;
         let slidingGlass = self.$el.getElementsByClassName('sliding-glass')[0];
         this.swipeDetector = new Hammer(slidingGlass, {threshold: 1, velocity: 0.1});
-        this.swipeDetector.on('swipeleft', function(ev) {
+        this.swipeDetector.on('swipeleft', function() {
           self.goToNextIndex();
         });
-        this.swipeDetector.on('swiperight', function(ev) {
+        this.swipeDetector.on('swiperight', function() {
           self.goToPrevIndex();
         })
       },

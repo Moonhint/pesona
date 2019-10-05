@@ -18,8 +18,6 @@
 
 <script>
   // TODO: make a toolbar component
-  // TODO: make a sidenav component
-  // TODO: sloted dashboard layout
   import styleMixin from 'mixins/styleMixin';
   
   export default {

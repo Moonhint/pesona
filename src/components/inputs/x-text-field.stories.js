@@ -4,7 +4,7 @@ import { withKnobs, select, text, boolean, color } from '@storybook/addon-knobs'
 
 import xTextField from './xTextField';
 
-storiesOf('OnDevelopment|Input & Control', module)
+storiesOf('OnDevelopment|Text Field', module)
   .addDecorator(withKnobs)
   .add('simple text field', () => ({
     components: { xTextField },

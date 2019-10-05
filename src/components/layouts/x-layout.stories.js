@@ -2,12 +2,12 @@ import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import StoryRouter from 'storybook-vue-router';
 
-import layoutMarkdown from './markdowns/layouts.md';
+import README from './README.md';
 
-import xLayout from './xLayout';
+import xLayoutTopDown from './xLayoutTopDown';
 import xLoCenter from './xLoCenter';
 import xLoDashboard from './xLoDashboard';
-import xNavbar from './xNavbar';
+import xNavbar from './../navbars/xNavbar';
 import xSidenav from './../sidenavs/xSidenav';
 import xSidenavItem from './../sidenavs/xSidenavItem';
 import xSidenavList from './../sidenavs/xSidenavList';
@@ -37,10 +37,10 @@ storiesOf('OnDevelopment|Layout', module)
       { path: '/page3', component: Page3 }
     ]
   }))
-  .add('layout', () => ({
-    components: { xLayout, xNavbar },
+  .add('layout top down', () => ({
+    components: { xLayoutTopDown, xNavbar },
     template: `
-      <es-layout>
+      <x-layout-top-down>
         <template v-slot:header>
           <x-navbar></x-navbar>        
         </template>
@@ -50,7 +50,7 @@ storiesOf('OnDevelopment|Layout', module)
         <template v-slot:footer>
           <div>this is footer</div>
         </template>
-      </es-layout>
+      </x-layout-top-down>
     `,
     methods: { 
       itemClick: action('itemClick') 
@@ -68,7 +68,7 @@ storiesOf('OnDevelopment|Layout', module)
     },
   }),{
     notes: {
-      markdown: layoutMarkdown
+      markdown: README
     }
   })
   .add('layout dashboard', () => ({
@@ -155,7 +155,7 @@ storiesOf('OnDevelopment|Layout', module)
     },
   }),{
     notes: {
-      markdown: layoutMarkdown
+      markdown: README
     }
   })
 

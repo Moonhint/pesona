@@ -1,3 +1,5 @@
+import webfontloader from 'webfontloader';
+
 export default {
   data: () => {
     return {
@@ -30,10 +32,17 @@ export default {
         // form
         formFrame: "#336B87",
         formText: "#000",
+      },
+      xPESONA_FONTS: {
+        fallback: 'Arial',
+        primary: 'Roboto',
+        secondary: 'Oswald',
+        tertiary: 'Mansalva',
       }
     };
   },
   mounted() {
+    this._loadFont();
     document.documentElement.style.setProperty("--pesona-brand-color-primary", this.xPESONA_COLORS.brandPrimary);
     document.documentElement.style.setProperty("--pesona-brand-color-secondary", this.xPESONA_COLORS.brandSecondary);
     document.documentElement.style.setProperty("--pesona-brand-color-accent", this.xPESONA_COLORS.brandAccent);
@@ -55,8 +64,23 @@ export default {
     document.documentElement.style.setProperty("--pesona-on-color-info", this.xPESONA_COLORS.onInfo);
     document.documentElement.style.setProperty("--pesona-form-color-frame", this.xPESONA_COLORS.formFrame);
     document.documentElement.style.setProperty("--pesona-form-color-text", this.xPESONA_COLORS.formText);
+    document.documentElement.style.setProperty("--pesona-font-primary", `${this.xPESONA_FONTS.primary}, ${this.xPESONA_FONTS.fallback}`);
+    document.documentElement.style.setProperty("--pesona-font-secondary", `${this.xPESONA_FONTS.secondary}, ${this.xPESONA_FONTS.fallback}`);
+    document.documentElement.style.setProperty("--pesona-font-tertiary", `${this.xPESONA_FONTS.tertiary}, ${this.xPESONA_FONTS.fallback}`);
   },
   methods: {
+    _loadFont(){
+      let self = this;
+      webfontloader.load({
+        google: {
+          families: [
+            self.xPESONA_FONTS.primary,
+            self.xPESONA_FONTS.secondary,
+            self.xPESONA_FONTS.tertiary
+          ]
+        }
+      });
+    },
     _setLocalCssVariables(variables){
       let self = this;
       let keys = Object.keys(variables);
@@ -67,7 +91,6 @@ export default {
       }
     },
     _setGlobalCssVariables(variables){
-      let self = this;
       let keys = Object.keys(variables);
 
       for (let index = 0; index < keys.length; index++) {
@@ -149,6 +172,20 @@ export default {
             frame: element.style.getPropertyValue("--pesona-form-color-frame"),
             text: element.style.getPropertyValue("--pesona-form-color-text"),
           },
+        }
+      }else{
+        return {};
+      }
+    },
+    _getCurrentFonts() {
+      let element = this._findNearestxThemeorHTML();
+      if (element){
+        return {
+          fonts: {
+            primary: element.style.getPropertyValue("--pesona-font-primary"),
+            secondary: element.style.getPropertyValue("--pesona-font-secondary"),
+            tertiary: element.style.getPropertyValue("--pesona-font-tertiary")
+          }
         }
       }else{
         return {};

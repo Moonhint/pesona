@@ -1,5 +1,5 @@
 <template>
-  <div class="pesona-layout">
+  <div class="pesona-layout-top-down">
     <div class="container">
       <div class="header" :style="{ position: currentHeaderPosition }">
         <slot name="header"></slot>
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    name: 'x-layout',
+    name: 'x-layout-top-down',
     props: {
       // to make the header sticky
       stickyHeader: {
@@ -46,11 +46,10 @@
 </script>
 
 <style lang="scss" scoped>
-  .pesona-layout{
+  .pesona-layout-top-down{
     .container {
       width: 100%;
-      height: 1000px;
-      border: 1px solid red;
+      height: auto;
 
       .header {
         top: 0;
