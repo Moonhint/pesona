@@ -1,6 +1,6 @@
 <template>
-  <div class="pesona-navbar" :style="{ position: currentPosition }">
-    <div class="container" :style="{ height }">
+  <div class="pesona-navbar">
+    <div class="container" :style="{ height: navbarHeight }">
       <div v-if="topping" class="topping-wrapper">
         <div class="topping">
           <slot name="topping"></slot>
@@ -37,22 +37,20 @@
         type: String,
         default: '#000'
       },
-      sticky: {
-        type: Boolean,
-        default: false
-      },
       topping: {
         type: Boolean,
         default: false
       }
     },
     computed: {
-      currentPosition(){
-        let position = 'sticky';
-        if (!this.sticky){
-          position = 'unset';
+      navbarHeight(){
+        // TODO: store this in css variable instead of hardcoded
+        let self = this;
+        let heightValue = parseInt(self.height);
+        if (self.topping){
+          heightValue = heightValue + 36;
         }
-        return position;
+        return `${heightValue}px`;
       }
     },
     data() {

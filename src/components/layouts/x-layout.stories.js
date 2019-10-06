@@ -42,7 +42,7 @@ storiesOf('OnDevelopment|Layout', module)
     template: `
       <x-layout-top-down>
         <template v-slot:header>
-          <x-navbar></x-navbar>        
+          <x-navbar topping></x-navbar>        
         </template>
         <template v-slot:main>
           <div>this is body</div>    

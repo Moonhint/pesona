@@ -4,11 +4,13 @@
       <div class="header" :style="{ position: currentHeaderPosition }">
         <slot name="header"></slot>
       </div>
-      <div class="main">
-        <slot name="main"></slot>
-      </div>
-      <div class="footer">
-        <slot name="footer"></slot>
+      <div class="content-wrapper">
+        <div class="main">
+          <slot name="main"></slot>
+        </div>
+        <div class="footer">
+          <slot name="footer"></slot>
+        </div>
       </div>
     </div>
   </div>
@@ -52,7 +54,18 @@
       height: auto;
 
       .header {
+        position: absolute;
         top: 0;
+      }
+
+      .content-wrapper {
+        .main {
+          display: block;
+          height: 1000px;
+        }
+        .footer {
+          display: block;
+        }
       }
     }
   }

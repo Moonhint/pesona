@@ -59,17 +59,5 @@ storiesOf('OnDevelopment|Navbar', module)
     methods: { 
       itemClick: action('itemClick') 
     },
-  }))
-  .add('sticky navbar', () => ({
-    components: { xNavbar },
-    template: `
-      <div>
-        <x-navbar sticky></x-navbar>
-        <div :style="{
-          width: '100%',
-          height: '1000px'
-        }"></div>
-      </div>
-    `
-  }))
+  }));
 
