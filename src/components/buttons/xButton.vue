@@ -189,7 +189,7 @@
             if (!self.inHover){
               self.showOption = false;
             }
-          }, 1000);
+          }, 300);
         }
       },
       setPeparedPropColors(){

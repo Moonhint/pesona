@@ -105,23 +105,14 @@
           margin-top: 16px;
           margin-right: 16px;
           justify-self: end;
-          
-          .pesona-button-wrapper {
-            display: inline-grid;
-            .pesona-button {
-              width: 130px;
-            }
-          }
         }
+
         .left-action {
           margin-top: 16px;
           margin-right: 16px;
           justify-self: end;
-          
-          .pesona-button-wrapper {
-            display: inline-grid;
-          }
         }
+
       }
 
     }
