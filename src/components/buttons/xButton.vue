@@ -319,7 +319,7 @@
   }
 
   .shape-rectangle {
-    border-radius: 0;
+    border-radius: 2px;
   }
 
   .texture-flat {

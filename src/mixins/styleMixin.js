@@ -69,14 +69,14 @@ export default {
     document.documentElement.style.setProperty("--pesona-font-tertiary", `${this.xPESONA_FONTS.tertiary}, ${this.xPESONA_FONTS.fallback}`);
   },
   methods: {
-    _loadFont(){
+    _loadFont(fonts = {}){
       let self = this;
       webfontloader.load({
         google: {
           families: [
-            self.xPESONA_FONTS.primary,
-            self.xPESONA_FONTS.secondary,
-            self.xPESONA_FONTS.tertiary
+            fonts.primary || self.xPESONA_FONTS.primary,
+            fonts.secondary || self.xPESONA_FONTS.secondary,
+            fonts.tertiary || self.xPESONA_FONTS.tertiary
           ]
         }
       });

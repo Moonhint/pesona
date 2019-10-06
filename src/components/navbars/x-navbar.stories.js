@@ -29,17 +29,6 @@ storiesOf('OnDevelopment|Navbar', module)
             <x-button>
               Single Page
             </x-button>
-            <x-button v-for="i in [1,2]" dropdown>
-              <div slot="options">
-                <a @click="itemClick" to="/">
-                  To Page 1
-                </a>
-                <a to="/page2">
-                  To Page 2
-                </a>
-              </div>
-              Pages
-            </x-button>
             <x-button ghost>
               Single Page
             </x-button>

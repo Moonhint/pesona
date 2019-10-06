@@ -1,16 +1,19 @@
 <template>
   <div class="pesona-navbar" :style="{ position: currentPosition }">
     <div class="container" :style="{ height }">
-      <div v-if="topping" class="topping">
-        <slot name="topping"></slot>
+      <div v-if="topping" class="topping-wrapper">
+        <div class="topping">
+          <slot name="topping"></slot>
+        </div>
       </div>
       <div class="bottom-wrapper">
         <div class="right-side">
           <slot name="right-side"></slot>
         </div>
+        <div/>
         <div class="left-side">
           <slot name="left-side"></slot>
-        </div>  
+        </div>
         <div class="left-action">
           <slot name="left-action"></slot>
         </div>     
@@ -73,16 +76,22 @@
     .container {
       width: 100%;
 
-      .topping {
+      .topping-wrapper {
         background-color: var(--pesona-brand-color-accent);
         color: var(--pesona-on-color-accent);
         height: 36px;
+        .topping {
+          display: grid;
+          padding: 8px 16px;
+          justify-content: end;
+        }
       }
 
       .bottom-wrapper {
+        font-family: var(--pesona-font-primary);
         height: 64px;
         display: grid;
-        grid-template-columns: 100px auto 100px;
+        grid-template-columns: 100px auto 800px 100px;
         grid-template-rows: auto;
 
         background-color: var(--pesona-brand-color-primary);
@@ -101,6 +110,9 @@
           
           .pesona-button-wrapper {
             display: inline-grid;
+            .pesona-button {
+              width: 130px;
+            }
           }
         }
         .left-action {

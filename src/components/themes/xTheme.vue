@@ -6,6 +6,8 @@
   </div>
 </template>
 
+
+
 <script>
   import styleMixin from 'mixins/styleMixin';
 
@@ -36,6 +38,12 @@
         default: () => {
           return {}
         }
+      },
+      fonts: {
+        type: Object,
+        default: () => {
+          return {}
+        }
       }
     },
     data: () => {
@@ -45,6 +53,7 @@
     },
     mounted(){
       this.setColors();
+      this.setFonts();
     },
     methods: {
       setColors(){
@@ -78,8 +87,8 @@
         }
 
         let formColors = {
-          frame: this.formColors.frame || this.xPESONA_COLORS.brandFrame,
-          text: this.formColors.text || this.xPESONA_COLORS.brandText,
+          frame: this.formColors.frame || this.xPESONA_COLORS.formFrame,
+          text: this.formColors.text || this.xPESONA_COLORS.formText,
         }
 
         this._setLocalCssVariables({
@@ -107,6 +116,26 @@
         });
 
         this.componentKey++;
+      },
+      setFonts(){
+
+        let fonts = {
+          primary: this.fonts.primary || this.xPESONA_FONTS.primary,
+          secondary: this.fonts.secondary || this.xPESONA_FONTS.secondary,
+          tertiary: this.fonts.tertiary || this.xPESONA_FONTS.tertiary,
+        }
+
+        this._loadFont({
+          primary: fonts.primary,
+          secondary: fonts.secondary,
+          tertiary: fonts.tertiary
+        });
+
+        this._setLocalCssVariables({
+          '--pesona-font-primary': `${this.fonts.primary}, ${this.xPESONA_FONTS.fallback}`,
+          '--pesona-font-secondary': `${this.fonts.secondary}, ${this.xPESONA_FONTS.fallback}`,
+          '--pesona-font-tertiary': `${this.fonts.tertiary}, ${this.xPESONA_FONTS.fallback}`,
+        });
       }
     },
     watch: {

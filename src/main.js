@@ -1,4 +1,4 @@
-import xTheme from './components/colors/xTheme.vue';
+import xTheme from './components/themes/xTheme.vue';
 import xButton from './components/buttons/xButton.vue';
 import xChildNavigator from './components/buttons/xChildNavigator.vue';
 import xIcon from './components/icons/xIcon.vue';
@@ -8,6 +8,7 @@ import xSlidingWindowItem from './components/sliders/xSlidingWindowItem.vue';
 import xLayoutTopDown from './components/layouts/xLayoutTopDown.vue';
 import xLoCenter from './components/layouts/xLoCenter.vue';
 import xLoDashboard from './components/layouts/xLoDashboard.vue';
+import xNavbar from './components/navbars/xNavbar.vue';
 import xSidenav from './components/sidenavs/xSidenav.vue';
 import xSidenavItem from './components/sidenavs/xSidenavItem.vue';
 import xSidenavList from './components/sidenavs/xSidenavList.vue';
@@ -24,6 +25,7 @@ const componentCatalog = [
   xLayoutTopDown,
   xLoCenter,
   xLoDashboard,
+  xNavbar,
   xSidenav,
   xSidenavItem,
   xSidenavList,
@@ -46,6 +48,7 @@ export {
   xSlidingWindowItem,
   xLoCenter,
   xLoDashboard,
+  xNavbar,
   xSidenav,
   xSidenavItem,
   xSidenavList,
