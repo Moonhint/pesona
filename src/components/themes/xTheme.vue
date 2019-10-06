@@ -132,9 +132,9 @@
         });
 
         this._setLocalCssVariables({
-          '--pesona-font-primary': `${this.fonts.primary}, ${this.xPESONA_FONTS.fallback}`,
-          '--pesona-font-secondary': `${this.fonts.secondary}, ${this.xPESONA_FONTS.fallback}`,
-          '--pesona-font-tertiary': `${this.fonts.tertiary}, ${this.xPESONA_FONTS.fallback}`,
+          '--pesona-font-primary': `${fonts.primary}, ${this.xPESONA_FONTS.fallback}`,
+          '--pesona-font-secondary': `${fonts.secondary}, ${this.xPESONA_FONTS.fallback}`,
+          '--pesona-font-tertiary': `${fonts.tertiary}, ${this.xPESONA_FONTS.fallback}`,
         });
       }
     },

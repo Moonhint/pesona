@@ -27,11 +27,12 @@
         v-on="$listeners">
       <slot></slot>
       <div class="downdown-indicator">
-        <x-icon v-if="dropdown && showOption" padding="0" name="caret-up" :size="sizeValue"/>
-        <x-icon v-if="dropdown && !showOption" padding="0" name="caret-down" :size="sizeValue"/>
+        <x-icon class="caret-icon" v-if="dropdown && showOption" padding="0" name="caret-up" :size="sizeValue"/>
+        <x-icon class="caret-icon" v-if="dropdown && !showOption" padding="0" name="caret-down" :size="sizeValue"/>
       </div>
     </div>
     <div v-if="dropdown && showOption" class="dropdown-option">
+    <!-- <div v-if="dropdown" class="dropdown-option"> -->
       <slot name="options"></slot>
     </div>
   </div>
@@ -123,7 +124,8 @@
       return {
         ancorElem: undefined,
         showOption: false,
-        inHover: false
+        inHover: false,
+        bufferHoverTimePassed: false
       };
     },
     created() {
@@ -133,6 +135,7 @@
       this.ancorElem = this.$el.getElementsByTagName('a')[0];
       this.setColorsByScheme(this.schema);
       this.setPeparedPropColors();
+      this._setLuminacesColor();
       this._setLocalCssVariables({ 
         '--size-value': this.sizeValue,
         '--size-half-value': this.sizeHalfValue,
@@ -176,12 +179,17 @@
     },
     methods: {
       hoverChange(e){
+        let self = this;
         if (e.type === 'mouseenter'){
           this.inHover = true;
           this.showOption = true;
         }else if (e.type === 'mouseleave'){
           this.inHover = false;
-          this.showOption = false;
+          setTimeout(()=>{
+            if (!self.inHover){
+              self.showOption = false;
+            }
+          }, 1000);
         }
       },
       setPeparedPropColors(){
@@ -200,8 +208,9 @@
           hex = currentColors.actions[val];
           onHex = currentColors.onActions[val];
           if (!hex){
-            hex = currentColors.shade.gray;
-            onHex = currentColors.shade.black;
+            // default if none of color provided
+            hex = currentColors.brands.primary;
+            onHex = currentColors.onBrands.primary;
           }
         }
         this._setLocalCssVariables({
@@ -269,6 +278,10 @@
       padding: var(--size-half-value) var(--size-value);
       pointer-events: var(--pointer-events-value);
     }
+  }
+
+  .pesona-button:hover{
+    background-color: var(--pesona-brand-color-accent);
   }
 
   .block {
@@ -339,34 +352,53 @@
     text-align: center;
     margin: 0 2px;
     transform: translateY(15%);
+
+    .caret-icon {
+      fill: var(--color-value) !important;
+    }
   }
 
   .dropdown-option {
     display: block;
-    position: relative;
-    top: 5px;
-    background-color: var(--bg-color-value);
+    position: absolute;
+    margin-top: 3px;
+    z-index: 999;
+    background-color: var(--pesona-brand-color-secondary);
+    animation-name: opacity;
+    animation-duration: 0.4s;
+    border: 1px solid rgba(34,36,38,.15);
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15)!important;
+    border-radius: 3px;
+
+    @keyframes opacity {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
 
     a {
       display: block;
       padding: 6px 8px;
       padding-left: 10px;
       text-decoration: none;
-      color: var(--color-value);
+      color: var(--pesona-on-color-secondary);
       cursor: pointer;
+    }
+
+    a:hover {
+      background-color: var(--pesona-brand-color-secondary-darken-10);  
     }
   }
 
   .dropdown-option:after {
     content: "";
     position: absolute;
-    right: 50%;
+    left: 12px;
     top: -6px;
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 0 6px 6px 6px;
-    border-color: transparent transparent var(--bg-color-value) transparent;
+    border-color: transparent transparent var(--pesona-brand-color-secondary) transparent;
     z-index: 9998;
   }
 </style>

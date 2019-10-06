@@ -61,7 +61,6 @@
       .content-wrapper {
         .main {
           display: block;
-          height: 1000px;
         }
         .footer {
           display: block;

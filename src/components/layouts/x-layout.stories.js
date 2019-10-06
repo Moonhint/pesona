@@ -16,7 +16,6 @@ import xToolbar from './xToolbar';
 import xColorPanel from './../panels/xColorPanel';
 import xIcon from './../icons/xIcon';
 
-
 const Page1 = {
   template: '<h1>Page 1</h1>'
 };

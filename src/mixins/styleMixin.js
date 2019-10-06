@@ -177,6 +177,23 @@ export default {
         return {};
       }
     },
+    _setLuminacesColor(){
+      let currentColor = this._getCurrentColors();
+      let brandPrimaryDarken10Percent = this._colorLuminance(currentColor.brands.primary, -0.1);
+      let brandSecondaryDarken10Percent = this._colorLuminance(currentColor.brands.secondary, -0.1);
+      let brandAccentDarken10Percent = this._colorLuminance(currentColor.brands.accent, -0.1);
+      let brandPrimaryLighten10Percent = this._colorLuminance(currentColor.brands.primary, 0.1);
+      let brandSecondaryLighten10Percent = this._colorLuminance(currentColor.brands.secondary, 0.1);
+      let brandAccentLighten10Percent = this._colorLuminance(currentColor.brands.accent, 0.1);
+      this._setLocalCssVariables({
+        '--pesona-brand-color-primary-darken-10': brandPrimaryDarken10Percent,
+        '--pesona-brand-color-secondary-darken-10': brandSecondaryDarken10Percent,
+        '--pesona-brand-color-accent-darken-10': brandAccentDarken10Percent,
+        '--pesona-brand-color-primary-lighten-10': brandPrimaryLighten10Percent,
+        '--pesona-brand-color-secondary-lighten-10': brandSecondaryLighten10Percent,
+        '--pesona-brand-color-accent-lighten-10': brandAccentLighten10Percent
+      });
+    },
     _getCurrentFonts() {
       let element = this._findNearestxThemeorHTML();
       if (element){
