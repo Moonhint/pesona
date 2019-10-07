@@ -56,6 +56,8 @@
       .header {
         position: absolute;
         top: 0;
+        z-index: 9999;
+        box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
       }
 
       .content-wrapper {

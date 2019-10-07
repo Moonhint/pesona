@@ -132,10 +132,12 @@
 
     },
     mounted(){
+      this.$nextTick(()=>{
+        this._setLuminacesColor();
+      });
       this.ancorElem = this.$el.getElementsByTagName('a')[0];
       this.setColorsByScheme(this.schema);
       this.setPeparedPropColors();
-      this._setLuminacesColor();
       this._setLocalCssVariables({ 
         '--size-value': this.sizeValue,
         '--size-half-value': this.sizeHalfValue,
@@ -367,7 +369,7 @@
     animation-name: opacity;
     animation-duration: 0.4s;
     border: 1px solid rgba(34,36,38,.15);
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15)!important;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.15);
     border-radius: 3px;
 
     @keyframes opacity {

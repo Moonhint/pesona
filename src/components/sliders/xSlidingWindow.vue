@@ -325,7 +325,7 @@
 
       .blacken-glass {
         background-color: black;
-        opacity: 0.5;
+        opacity: 0.7;
       }
 
       .side-border {
