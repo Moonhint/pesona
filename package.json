@@ -1,6 +1,6 @@
 {
   "name": "pesona",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "scripts": {
     "lib": "vue-cli-service build --target lib --name pesona ./src/main.js",
     "storybook": "start-storybook -p 6006",

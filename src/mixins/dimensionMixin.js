@@ -94,6 +94,10 @@ export default {
           return `${Math.floor(parseInt(this.xPESONA_SIZE_VALUE.BASE)*2)}px`;
         }
       }
+    },
+    _getMeasurementUnit(strValue) {
+      let value = parseFloat(strValue);
+      return strValue.split(value)[1];
     }
   },
 }

@@ -1,12 +1,21 @@
 <template>
   <div class="pesona-child-navigator">
     <template v-if="type==='by-length'">
-      <div class="item" :class="{
-          'active': active === index,
+      <div class="item item-chevron pointer">
+        <x-icon @click="goToVeryFirst()" name="chevron-left" size="8px" padding="0"/>
+      </div>
+      <div class="item pointer" :class="{
+          'active': activedIndex === index,
           'item__round': shape === 'round',
           'item__rectangle': shape === 'rectangle'
-        }" v-for="(item, index) in lengthConvert" :key="index">
-        <div class="item--text pointer" @click="childOnClick(item, index)">{{item+1}}</div> 
+        }" v-for="(item, index) in lengthConvert" :key="index" 
+        @click="childOnClick(item, index)">
+        <div class="item--text pointer">
+          <span v-if="!noNumber">{{item+1}}</span>
+        </div> 
+      </div>
+      <div class="item item-chevron pointer">
+        <x-icon @click="goToVeryEnd()" name="chevron-right" size="8px" padding="0"/>
       </div>
     </template>
     <template v-else>
@@ -18,8 +27,13 @@
 </template>
 
 <script>
+  import xIcon from './../icons/xIcon'; 
+
   export default {
     name: 'x-child-navigator',
+    components: {
+      xIcon
+    },
     props:{
       type: {
         type: String,
@@ -40,12 +54,19 @@
       active: {
         type: Number,
         default: 0
+      },
+      noNumber: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {
-
+        activedIndex: 0
       };
+    },
+    mounted(){
+      this.activedIndex = this.active;
     },
     computed: {
       lengthConvert() {
@@ -57,9 +78,22 @@
       }
     },
     methods: {
+      goToVeryFirst(){
+        this.activedIndex = 0;
+        this.$emit('child-clicked', 0);
+      },
       childOnClick(item, index) {
-        this.active = index;
+        this.activedIndex = index;
         this.$emit('child-clicked', item);
+      },
+      goToVeryEnd(){
+        this.activedIndex = this.length - 1;
+        this.$emit('child-clicked', this.length - 1);
+      },
+    },
+    watch: {
+      active: function(newVal){
+        this.activedIndex = newVal;
       }
     }
   }
@@ -73,17 +107,25 @@
 
   .item {
     user-select: none;
-    border: 1px solid black;
     font-size: small;
-    background-color: gray;
-    min-width: 20px;
-    min-height: 20px;
+    background-color: #A1A9B2;
+    min-width: 7px;
+    min-height: 7px;
     margin: 3px;
     text-align: center;
   }
 
+  .item-chevron {
+    height: 0;
+    background-color: transparent;
+    transform: translateY(-4px);
+    svg {
+      fill: #A1A9B2 !important;
+    }
+  }
+
   .active {
-    background-color: red;
+    background-color: #FFFFFF;
   }
 
   .item__round {

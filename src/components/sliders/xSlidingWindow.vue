@@ -8,7 +8,11 @@
         <x-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
       </div>
       <div class="item-container" :style="{ height: slotHeight,  border: borderColor }">
-        <div class="sliding-glass" :style="slideTranslateObj">
+        <div class="global-title-box">
+          <span>{{globalTitle}}</span>
+          <span>{{globalSubtitle}}</span>
+        </div>
+        <div class="sliding-glass" :class="{'blacken-glass': globalTitle}" :style="slideTranslateObj">
           <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
           <template v-if="!slotMode">
             <div @click="childClicked(item)" class="item unselectable" 
@@ -28,8 +32,11 @@
         </div>
       </div>
     </div>
-    <div class="bottom-nav" v-if="!hideBottomNavigation">
-      <x-child-navigator :active="currentIndex" :length="lengthOfIndex" @child-clicked="childNavigatorClicked"/>
+    <div :class="{
+        'bottom-nav': !embedBottomNavigation,
+        'embed-bottom-nav': embedBottomNavigation
+        }" v-if="!hideBottomNavigation">
+      <x-child-navigator no-number :active="currentIndex" :length="lengthOfIndex" @child-clicked="childNavigatorClicked"/>
     </div>
   </div>
 </template>
@@ -38,6 +45,8 @@
   import xChildNavigator from './../buttons/xChildNavigator';
   import xIcon from './../icons/xIcon';
   import Hammer from 'hammerjs';
+  import styleMixin from 'mixins/styleMixin';
+  import dimensionMixin from 'mixins/dimensionMixin';
 
   // TODO: style the text
   // TODO: left space and logo header
@@ -49,6 +58,7 @@
       xChildNavigator,
       xIcon
     },
+    mixins: [styleMixin, dimensionMixin],
     props: {
       slotMode: {
         type: Boolean,
@@ -91,7 +101,7 @@
       // border color
       borderColor: {
         type: String,
-        default: "1px solid #000"
+        default: "none"
       },
 
       // items per slide
@@ -110,6 +120,12 @@
         default: false
       },
 
+      // embed navigation
+      embedBottomNavigation: {
+        type: Boolean,
+        default: false
+      },
+
       // auto slide
       autoSlide: {
         type: Boolean,
@@ -118,29 +134,42 @@
       autoSlideInterval: {
         type: Number,
         default: 3000
+      },
+
+      // global title
+      globalTitle: {
+        type: String,
+        default: ''
+      },
+      globalSubtitle: {
+        type: String,
+        default: ''
       }
     },
     computed: {
-      // TODO: give back the measurement unit not just pixel
       adjustedHeightValue() {
         let slotHeight = Number.parseInt(this.slotHeight);
         let topBottomGap = Number.parseInt(this.topBottomGap);
-        let value = `${(slotHeight+2) + (topBottomGap*2)}px`
+        let measurementUnit = this._getMeasurementUnit(this.slotHeight);
+        
+        let value = `${(slotHeight) + (topBottomGap*2)}${measurementUnit}`;
         return value;
       },
       slideTranslateObj(){
         let slotWidth = Number.parseInt(this.slotWidth);
         let slotGap = Number.parseInt(this.slotGap);
+        let measurementUnit = this._getMeasurementUnit(this.slotWidth);
 
         let value = {
-          transform: `translateX(-${ ((slotWidth + slotGap) * this.currentIndex) * this.usedItemPerSlide }px)`
+          transform: `translateX(-${ ((slotWidth + slotGap) * this.currentIndex) * this.usedItemPerSlide }${measurementUnit})`
         };
 
         return value;
       },
       halfSlotGap(){
         let slotGap = Number.parseInt(this.slotGap);
-        let value = `${slotGap/2}px`;
+        let measurementUnit = this._getMeasurementUnit(this.slotGap);
+        let value = `${slotGap/2}${measurementUnit}`;
         return value;
       },
       maximumItemsSlideByWindowWidth(){
@@ -272,7 +301,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .pesona-sliding-window{
+  .pesona-sliding-window {
 
     width: 100%;
 
@@ -292,6 +321,11 @@
         font-size: 0;
         transition-timing-function: ease-in;
         transition: 1s;
+      }
+
+      .blacken-glass {
+        background-color: black;
+        opacity: 0.5;
       }
 
       .side-border {
@@ -347,6 +381,30 @@
       margin-top: 10px;
     }
 
+    .embed-bottom-nav {
+      position: relative;
+      top: -35px;
+    }
+
+    .global-title-box {
+      position: absolute;
+      color: var(--pesona-shade-color-white);
+      font-size: var(--pesona-font-xlarge);
+      font-family: var(--pesona-font-primary);
+      font-weight: 600;
+      text-align: center;
+      z-index: 999;
+      max-width: 60%;
+      white-space: normal;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+
+      span {
+        display: block;
+      }
+    }
+
   }
 
   .unselectable {
@@ -357,4 +415,5 @@
     -webkit-user-select: none;
     -ms-user-select: none;
   }
+
 </style>
