@@ -34,7 +34,7 @@
           <span>{{globalTitle}}</span>
           <span>{{globalSubtitle}}</span>
         </div>
-        <div class="sliding-glass" :class="{'blacken-glass': globalTitle}" :style="slideTranslateObj">
+        <div class="sliding-glass" :class="{'blacken-glass': (globalTitle || blacken)}" :style="slideTranslateObj">
           <div class="side-border" :style="{ width: halfSlotGap, height: slotHeight }"></div>
           <template v-if="!slotMode">
             <div @click="childClicked(item)" class="item unselectable" 
@@ -172,6 +172,12 @@
       globalSubtitle: {
         type: String,
         default: ''
+      },
+
+      // manually decide to blacken the slide
+      blacken: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {

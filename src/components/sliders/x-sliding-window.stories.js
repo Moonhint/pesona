@@ -122,6 +122,7 @@ storiesOf('OnDevelopment|SlidingWindow', module)
           :auto-slide-interval="3000"
           hide-bottom-navigation
           round-side-navigation
+          blacken
         />
       </div>
     `,
