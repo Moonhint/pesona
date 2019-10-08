@@ -100,4 +100,33 @@ storiesOf('OnDevelopment|SlidingWindow', module)
       itemClick: action('itemClick') 
     },
   }))
+  .add('auto sliding-window whole screen with round side nav', () => ({
+    components: { xSlidingWindow },
+    template: `
+      <div>
+        <x-sliding-window
+          slot-width="100vw"
+          slot-height="100vh" 
+          :window-items="[
+            { item_image_url: 'https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg'},
+            { item_image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Balaton_Hungary_Landscape.jpg/1024px-Balaton_Hungary_Landscape.jpg'},
+            { item_image_url: 'https://cdn.pixabay.com/photo/2016/10/22/17/46/scotland-1761292_960_720.jpg'},
+            { item_image_url: 'https://cdn.pixabay.com/photo/2017/03/26/12/13/countryside-2175353_960_720.jpg'},
+            { item_image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC4D-PdFuo4_qIHQWg4502kOy-z6ApXH8B0IpGx3LxI_s0jduT'},
+            { item_image_url: 'http://res.publicdomainfiles.com/pdf_view/17/13504599616594.png'},
+            { item_image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvK7mVjIkSFk-4Tu96xUrPQJKFlMt_loVFoItYy6uCRMZmamDT'},
+          ]" 
+          @item-click="itemClick" 
+          :items-per-slide="1" 
+          slot-gap="0"
+          :auto-slide-interval="3000"
+          hide-bottom-navigation
+          round-side-navigation
+        />
+      </div>
+    `,
+    methods: { 
+      itemClick: action('itemClick') 
+    },
+  }))
 

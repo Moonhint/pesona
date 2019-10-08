@@ -1,12 +1,34 @@
 <template>
   <div class="pesona-sliding-window">
     <div class="window-glass" :style="{ 'background-color': backgroundColor, 'padding-top': topBottomGap, 'padding-bottom': topBottomGap }">
-      <div class="side-nav side-nav--right" v-if="!hideSideNavigation" :style="{ height: adjustedHeightValue }" @click="goToNextIndex">
-        <x-icon class="side-nav--action" color="white" name="angle-right" size="50"/>
-      </div>
-      <div class="side-nav side-nav--left" v-if="!hideSideNavigation" :style="{ height: adjustedHeightValue }" @click="goToPrevIndex">
-        <x-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
-      </div>
+      <template v-if="roundSideNavigation">
+        <div class="round-side-navigation round-side-navigation--right" v-if="!hideSideNavigation && necessaryToHaveNavigation" :style="{ 
+              height: adjustedHeightValue, 
+              width: halfAdjustedHeightValue,
+              'border-bottom-left-radius': doubleAdjustedHeightValue, 
+              'border-top-left-radius': doubleAdjustedHeightValue 
+            }" 
+            @click="goToNextIndex">
+          <x-icon class="round-side-navigation--action unselectable" color="black" name="angle-right" :size="halfAdjustedHeightValue"/>
+        </div>
+        <div class="round-side-navigation round-side-navigation--left" v-if="!hideSideNavigation && necessaryToHaveNavigation" :style="{ 
+              height: adjustedHeightValue,
+              width: halfAdjustedHeightValue,
+              'border-bottom-right-radius': doubleAdjustedHeightValue, 
+              'border-top-right-radius': doubleAdjustedHeightValue 
+            }" 
+            @click="goToPrevIndex">
+          <x-icon class="round-side-navigation--action unselectable" color="black" name="angle-left" :size="halfAdjustedHeightValue"/>
+        </div>
+      </template>
+      <template v-else>
+        <div class="side-nav side-nav--right" v-if="!hideSideNavigation && necessaryToHaveNavigation" :style="{ height: adjustedHeightValue }" @click="goToNextIndex">
+          <x-icon class="side-nav--action" color="white" name="angle-right" size="50"/>
+        </div>
+        <div class="side-nav side-nav--left" v-if="!hideSideNavigation && necessaryToHaveNavigation" :style="{ height: adjustedHeightValue }" @click="goToPrevIndex">
+          <x-icon class="side-nav--action" color="white" name="angle-left" size="50"/>
+        </div>
+      </template>
       <div class="item-container" :style="{ height: slotHeight,  border: borderColor }">
         <div class="global-title-box">
           <span>{{globalTitle}}</span>
@@ -35,7 +57,7 @@
     <div :class="{
         'bottom-nav': !embedBottomNavigation,
         'embed-bottom-nav': embedBottomNavigation
-        }" v-if="!hideBottomNavigation">
+        }" v-if="!hideBottomNavigation && necessaryToHaveNavigation">
       <x-child-navigator no-number :active="currentIndex" :length="lengthOfIndex" @child-clicked="childNavigatorClicked"/>
     </div>
   </div>
@@ -126,6 +148,12 @@
         default: false
       },
 
+      // round side navigation {
+      roundSideNavigation: {
+        type: Boolean,
+        default: false
+      },
+
       // auto slide
       autoSlide: {
         type: Boolean,
@@ -152,8 +180,26 @@
         let topBottomGap = Number.parseInt(this.topBottomGap);
         let measurementUnit = this._getMeasurementUnit(this.slotHeight);
         
-        let value = `${(slotHeight) + (topBottomGap*2)}${measurementUnit}`;
-        return value;
+        let value = (slotHeight) + (topBottomGap*2);
+
+        if (this.roundSideNavigation){
+          value = value / 3;
+        }
+
+        let valueWithMeasurement = `${value}${measurementUnit}`;
+        return valueWithMeasurement;
+      },
+      halfAdjustedHeightValue() {
+        let value = Number.parseInt(this.adjustedHeightValue);
+        let measurementUnit = this._getMeasurementUnit(this.adjustedHeightValue);
+        let valueWithMeasurement = `${Number.parseInt(value/2)}${measurementUnit}`;
+        return valueWithMeasurement;
+      },
+      doubleAdjustedHeightValue() {
+        let value = Number.parseInt(this.adjustedHeightValue);
+        let measurementUnit = this._getMeasurementUnit(this.adjustedHeightValue);
+        let valueWithMeasurement = `${Number.parseInt(value*2)}${measurementUnit}`;
+        return valueWithMeasurement;
       },
       slideTranslateObj(){
         let slotWidth = Number.parseInt(this.slotWidth);
@@ -197,6 +243,10 @@
         let adjustedItemLength = Math.ceil(itemLength / this.usedItemPerSlide);
         return adjustedItemLength;
       },
+      necessaryToHaveNavigation(){
+        let itemsCount = this.lengthOfIndex;
+        return (itemsCount > 1) ? true : false;
+      }
     },
     data() {
       return {
@@ -301,6 +351,13 @@
 </script>
 
 <style lang="scss" scoped>
+  .pesona-sliding-window:hover {
+    .round-side-navigation {
+      transition: opacity 1.5s;
+      opacity: 0.3;
+    }
+  }
+
   .pesona-sliding-window {
 
     width: 100%;
@@ -374,6 +431,45 @@
 
       &--action {
         cursor: pointer;
+      }
+    }
+
+    .round-side-navigation:hover {
+      transition: opacity 1.5s;
+      opacity: 1;
+    }
+
+    .round-side-navigation {
+      transition: opacity 1s;
+      opacity: 0;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 10%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      overflow: hidden;
+      background: #FFF;
+      cursor: pointer;
+
+      &--left {
+        border-bottom-right-radius: 30px * 2;
+        border-top-right-radius: 30px * 2;
+        svg {
+          transform: translateX(15%);
+        }
+      }
+
+      &--right {
+        right: -1px;
+        overflow: hidden;
+        border-bottom-left-radius: 30px * 2;
+        border-top-left-radius: 30px * 2;
+        svg {
+          transform: translateX(35%);
+        }
       }
     }
 
