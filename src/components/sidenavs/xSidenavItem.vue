@@ -1,6 +1,6 @@
 <template>
   <div class="pesona-sidenav-item">
-    <a class="container" @click="containerClicked" :class="{ 
+    <div class="container" @click="containerClicked" :class="{ 
         'wraped': (isWarped && !isShrink), 
         'shrink': isShrink
       }">
@@ -10,7 +10,7 @@
       <div v-if="state === 'open'" class="item text" :style="textStyle">
         <slot></slot>
       </div>
-    </a>
+    </div>
   </div>
 </template>
 
@@ -53,9 +53,9 @@
         this.isWarped = true;
       }
 
-      let ancorElement = this.$el.getElementsByTagName('A');
+      let ancorElement = this.$el.getElementsByClassName('container');
       if (ancorElement.length > 1) {
-        ancorElement[0].setAttribute('href', ancorElement[1].getAttribute('href'));
+        // ancorElement[0].setAttribute('href', ancorElement[1].getAttribute('href'));
         // ancorElement[0].className = "router-link-exact-active router-link-active container";
         // ancorElement[0].__vue__ = ancorElement[1].__vue__;
       }
