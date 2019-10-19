@@ -122,12 +122,12 @@ storiesOf('OnDevelopment|Sidenav', module)
           <x-sidenav-list icon='menu' text='List One'>
             <x-sidenav-item icon='menu'> 
               <router-link to="/page2">
-                To Page 1
+                To Page 2
               </router-link>
             </x-sidenav-item>
             <x-sidenav-item icon='menu'> 
               <router-link to="/page3">
-                To Page 2
+                To Page 3
               </router-link>
             </x-sidenav-item>
           </x-sidenav-list>

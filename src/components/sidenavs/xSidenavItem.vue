@@ -32,9 +32,7 @@
     computed: {
       textStyle() {
         let style = {};
-        // if (!this.isWarped) {
-          style.transform = 'translateY(-10px)';
-        // }
+        style.transform = 'translateY(-10px)';
         return style;
       },
       isShrink() {
@@ -53,12 +51,14 @@
         this.isWarped = true;
       }
 
-      let ancorElement = this.$el.getElementsByClassName('container');
-      if (ancorElement.length > 1) {
-        // ancorElement[0].setAttribute('href', ancorElement[1].getAttribute('href'));
-        // ancorElement[0].className = "router-link-exact-active router-link-active container";
-        // ancorElement[0].__vue__ = ancorElement[1].__vue__;
-      }
+      this.$el.addEventListener("click", () => {
+        let ancorElement = this.$el.getElementsByTagName('A');
+        if (ancorElement.length >= 1) {
+          let ancorEl = ancorElement[0];
+          ancorEl.click();
+        }
+      });
+
       this.$parent.$on('stateChange', this.changeInternalState)
     },
     methods: {
@@ -78,7 +78,8 @@
       display: block;
       border-radius: 5px;
       padding: 4px 8px;
-      margin: 0 4%;    
+      margin: 0 4%;   
+      cursor: pointer; 
 
       .item {
         display: inline-block;
