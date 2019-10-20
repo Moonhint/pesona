@@ -7522,7 +7522,16 @@ var webfontloader_default = /*#__PURE__*/__webpack_require__.n(webfontloader);
           searchEl = false;
         } else {
           if (element.tagName === 'HTML' || element.tagName === 'DIV' && element.className === 'pesona-theme') {
-            searchEl = false;
+            if (element.tagName !== 'HTML') {
+              // test if any css variable value available
+              if (element.style.getPropertyValue("--pesona-brand-color-primary") === "") {
+                element = element.parentElement;
+              } else {
+                searchEl = false;
+              }
+            } else {
+              searchEl = false;
+            }
           } else {
             element = element.parentElement;
           }
@@ -7577,26 +7586,36 @@ var webfontloader_default = /*#__PURE__*/__webpack_require__.n(webfontloader);
     _setLuminacesColor: function _setLuminacesColor() {
       var currentColor = this._getCurrentColors();
 
-      var brandPrimaryDarken10Percent = this._colorLuminance(currentColor.brands.primary, -0.1);
+      var luminanceObj = {};
 
-      var brandSecondaryDarken10Percent = this._colorLuminance(currentColor.brands.secondary, -0.1);
+      if (currentColor.brands) {
+        var brandPrimaryDarken10Percent = this._colorLuminance(currentColor.brands.primary, -0.1);
 
-      var brandAccentDarken10Percent = this._colorLuminance(currentColor.brands.accent, -0.1);
+        var brandPrimaryLighten10Percent = this._colorLuminance(currentColor.brands.primary, 0.1);
 
-      var brandPrimaryLighten10Percent = this._colorLuminance(currentColor.brands.primary, 0.1);
+        luminanceObj['--pesona-brand-color-primary-darken-10'] = brandPrimaryDarken10Percent;
+        luminanceObj['--pesona-brand-color-primary-lighten-10'] = brandPrimaryLighten10Percent;
+      }
 
-      var brandSecondaryLighten10Percent = this._colorLuminance(currentColor.brands.secondary, 0.1);
+      if (currentColor.brands) {
+        var brandSecondaryDarken10Percent = this._colorLuminance(currentColor.brands.secondary, -0.1);
 
-      var brandAccentLighten10Percent = this._colorLuminance(currentColor.brands.accent, 0.1);
+        var brandSecondaryLighten10Percent = this._colorLuminance(currentColor.brands.secondary, 0.1);
 
-      this._setLocalCssVariables({
-        '--pesona-brand-color-primary-darken-10': brandPrimaryDarken10Percent,
-        '--pesona-brand-color-secondary-darken-10': brandSecondaryDarken10Percent,
-        '--pesona-brand-color-accent-darken-10': brandAccentDarken10Percent,
-        '--pesona-brand-color-primary-lighten-10': brandPrimaryLighten10Percent,
-        '--pesona-brand-color-secondary-lighten-10': brandSecondaryLighten10Percent,
-        '--pesona-brand-color-accent-lighten-10': brandAccentLighten10Percent
-      });
+        luminanceObj['--pesona-brand-color-secondary-darken-10'] = brandSecondaryDarken10Percent;
+        luminanceObj['--pesona-brand-color-secondary-lighten-10'] = brandSecondaryLighten10Percent;
+      }
+
+      if (currentColor.brands) {
+        var brandAccentDarken10Percent = this._colorLuminance(currentColor.brands.accent, -0.1);
+
+        var brandAccentLighten10Percent = this._colorLuminance(currentColor.brands.accent, 0.1);
+
+        luminanceObj['--pesona-brand-color-accent-darken-10'] = brandAccentDarken10Percent;
+        luminanceObj['--pesona-brand-color-accent-lighten-10'] = brandAccentLighten10Percent;
+      }
+
+      this._setLocalCssVariables(luminanceObj);
     },
     _getCurrentFonts: function _getCurrentFonts() {
       var element = this._findNearestxThemeorHTML();
