@@ -20,6 +20,12 @@ storiesOf('OnDevelopment|Text Field', module)
       placeholder: {
         default: text('Placeholder', 'Placeholder', 'Indicator')
       },
+      mode: {
+        default: select('Mode', {
+          material: 'material',
+          ant: 'ant'
+        }, 'material', 'Mode')
+      },
     },
     template: `
       <div>
@@ -29,6 +35,31 @@ storiesOf('OnDevelopment|Text Field', module)
           :label="label"
           :placeholder="placeholder">
         </x-text-field>
+      </div>
+    `,
+    methods: { 
+      logModel(){
+        console.info(this.binder);
+      }
+    }
+  }))
+  .add('Text field with prepend icon', () => ({
+    components: { xTextField },
+    data: () => {
+      return {
+        binder: ''
+      }
+    },
+    props: {
+      label: {
+        default: text('Label', 'Label', 'Indicator')
+      },
+      placeholder: {
+        default: text('Placeholder', 'Placeholder', 'Indicator')
+      },
+    },
+    template: `
+      <div>
         <x-text-field
           prepend-icon-name="search"
           @click="logModel"

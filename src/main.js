@@ -13,6 +13,8 @@ import xSidenav from './components/sidenavs/xSidenav.vue';
 import xSidenavItem from './components/sidenavs/xSidenavItem.vue';
 import xSidenavList from './components/sidenavs/xSidenavList.vue';
 import xSidenavTitle from './components/sidenavs/xSidenavTitle.vue';
+import xDialog from './components/dialogs/xDialog.vue';
+import xCard from './components/cards/xCard.vue';
 
 const componentCatalog = [
   xTheme,
@@ -29,7 +31,9 @@ const componentCatalog = [
   xSidenav,
   xSidenavItem,
   xSidenavList,
-  xSidenavTitle
+  xSidenavTitle,
+  xDialog,
+  xCard
 ]
 
 const install = function (Vue) {
