@@ -23,8 +23,8 @@ storiesOf('OnDevelopment|Text Field', module)
       mode: {
         default: select('Mode', {
           material: 'material',
-          ant: 'ant'
-        }, 'material', 'Mode')
+          antd: 'antd'
+        }, 'antd', 'Mode')
       },
     },
     template: `
@@ -33,7 +33,47 @@ storiesOf('OnDevelopment|Text Field', module)
           @click="logModel"
           v-model="binder" 
           :label="label"
-          :placeholder="placeholder">
+          :placeholder="placeholder"
+          :mode="mode">
+        </x-text-field>
+      </div>
+    `,
+    methods: { 
+      logModel(){
+        console.info(this.binder);
+      }
+    }
+  }))
+  .add('password text field', () => ({
+    components: { xTextField },
+    data: () => {
+      return {
+        binder: ''
+      }
+    },
+    props: {
+      label: {
+        default: text('Label', 'Label', 'Indicator')
+      },
+      placeholder: {
+        default: text('Placeholder', 'Placeholder', 'Indicator')
+      },
+      mode: {
+        default: select('Mode', {
+          material: 'material',
+          antd: 'antd'
+        }, 'antd', 'Mode')
+      },
+    },
+    template: `
+      <div>
+        <x-text-field
+          is-password
+          @click="logModel"
+          v-model="binder" 
+          :label="label"
+          :placeholder="placeholder"
+          :mode="mode">
         </x-text-field>
       </div>
     `,
@@ -57,6 +97,12 @@ storiesOf('OnDevelopment|Text Field', module)
       placeholder: {
         default: text('Placeholder', 'Placeholder', 'Indicator')
       },
+      mode: {
+        default: select('Mode', {
+          material: 'material',
+          antd: 'antd'
+        }, 'antd', 'Mode')
+      },
     },
     template: `
       <div>
@@ -64,7 +110,8 @@ storiesOf('OnDevelopment|Text Field', module)
           prepend-icon-name="search"
           @click="logModel"
           v-model="binder" 
-          :label="label">
+          :label="label"
+          :mode="mode">
         </x-text-field>
       </div>
     `,

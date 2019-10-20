@@ -5,7 +5,7 @@
         <slot name="activator" v-if="showActivator"></slot>
       </div>
       <transition name="fade">
-        <x-lo-center v-if="value">
+        <x-lo-center v-if="value" class="content-wrapper">
           <div class="content" :class="{ twitching: showTwitching }">
             <slot></slot>
           </div>
@@ -70,6 +70,12 @@
       overflow: hidden;
       .activator-space {
         position: absolute;
+      }
+      .content-wrapper {
+        position: fixed;
+        top: 0;
+        z-index: 9999;
+        width: 100%;
       }
       .content {
         position: relative;
