@@ -5,6 +5,12 @@ export default {
     },
     _isNumber: (value) => {
       return typeof value === 'number' && isFinite(value);
+    },
+    _isBoolean: (value) => {
+      return typeof value === "boolean"
+    },
+    _isArray: (value) => {
+      return value instanceof Array
     }
   },
 }

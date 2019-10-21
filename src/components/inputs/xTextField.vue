@@ -215,6 +215,7 @@
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         margin: 0;
+        margin-top: 4px;
         padding: 0;
         font-variant: tabular-nums;
         list-style: none;
