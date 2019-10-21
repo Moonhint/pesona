@@ -28,7 +28,7 @@ storiesOf('OnDevelopment|Text Field', module)
       },
     },
     template: `
-      <div>
+      <div style="margin: 5px;">
         <x-text-field
           @click="logModel"
           v-model="binder" 
@@ -66,7 +66,7 @@ storiesOf('OnDevelopment|Text Field', module)
       },
     },
     template: `
-      <div>
+      <div style="margin: 5px;">
         <x-text-field
           is-password
           @click="logModel"
@@ -105,7 +105,7 @@ storiesOf('OnDevelopment|Text Field', module)
       },
     },
     template: `
-      <div>
+      <div style="margin: 5px;">
         <x-text-field
           prepend-icon-name="search"
           @click="logModel"

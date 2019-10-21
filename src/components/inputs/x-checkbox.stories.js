@@ -25,7 +25,7 @@ storiesOf('OnDevelopment|Checkbox', module)
       },
     },
     template: `
-      <div>
+      <div style="margin: 5px;">
         <x-checkbox
           v-model="binder" 
           :label="label"
@@ -75,7 +75,7 @@ storiesOf('OnDevelopment|Checkbox', module)
       },
     },
     template: `
-      <div>
+      <div style="margin: 5px;">
         <x-checkbox
           v-model="binde" 
           label="Normal"

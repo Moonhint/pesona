@@ -130,17 +130,17 @@
   .pesona-checkbox {
 
     .antd-container {
+      font-family: 'Roboto', sans-serif;
       display: inline-block;
       position: relative;
       padding-left: 25px;
-      margin: 5px;
       cursor: pointer;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      color: rgba(0, 0, 0, 0.65);
-      font-size: 14px;
+      color: var(--pesona-shade-color-semi-black);
+      font-size: 13px;
       font-variant: tabular-nums;
       line-height: 1.5;
       list-style: none;

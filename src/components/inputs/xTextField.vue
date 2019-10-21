@@ -147,7 +147,6 @@
     font-family: 'Roboto', sans-serif;
     
     .material-mode {
-      margin: 8px;
       border-bottom: 1px solid var(--pesona-shade-color-gray);
       label {
         color: var(--pesona-shade-color-gray);
@@ -202,7 +201,6 @@
     $ant-label-blue: #376DB0;
 
     .antd-mode {
-      margin: 8px;
 
       label {
         line-height: 21px;
