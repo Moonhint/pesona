@@ -54,13 +54,18 @@ export {
   xColorPanel,
   xSlidingWindow,
   xSlidingWindowItem,
+  xLayoutTopDown,
   xLoCenter,
   xLoDashboard,
   xNavbar,
   xSidenav,
   xSidenavItem,
   xSidenavList,
-  xSidenavTitle
+  xSidenavTitle,
+  xDialog,
+  xCard,
+  xTextField,
+  xCheckbox
 }
 
 export default install

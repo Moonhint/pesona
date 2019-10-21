@@ -31,7 +31,7 @@
   import dataTypeMixin from 'mixins/dataTypeMixin';
 
   export default {
-    name: 'x-text-field',
+    name: 'x-checkbox',
     components: { },
     mixins: [dimensionMixin, styleMixin, dataTypeMixin],
     props:{
