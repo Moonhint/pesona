@@ -29,11 +29,10 @@
   import dimensionMixin from 'mixins/dimensionMixin';
   import styleMixin from 'mixins/styleMixin';
   import dataTypeMixin from 'mixins/dataTypeMixin';
-  import xIcon from './../icons/xIcon'; 
 
   export default {
     name: 'x-text-field',
-    components: { xIcon },
+    components: { },
     mixins: [dimensionMixin, styleMixin, dataTypeMixin],
     props:{
       // for v-model

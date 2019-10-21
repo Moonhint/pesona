@@ -92,6 +92,7 @@
         }else if (this.mode === "material-icons"){
           return materialIcons.icons[index].paths[0];
         }
+        return 0;
       },
       sizeValue(){
         let sizeHierarki = ["hero", "xxlarge", "xlarge", "large", "medium", "fair", "base", "small", "tiny"];

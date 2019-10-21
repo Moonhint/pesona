@@ -16,6 +16,7 @@ import xSidenavTitle from './components/sidenavs/xSidenavTitle.vue';
 import xDialog from './components/dialogs/xDialog.vue';
 import xCard from './components/cards/xCard.vue';
 import xTextField from './components/inputs/xTextField.vue';
+import xCheckbox from './components/inputs/xCheckbox.vue';
 
 const componentCatalog = [
   xTheme,
@@ -35,7 +36,8 @@ const componentCatalog = [
   xSidenavTitle,
   xDialog,
   xCard,
-  xTextField
+  xTextField,
+  xCheckbox
 ]
 
 const install = function (Vue) {
