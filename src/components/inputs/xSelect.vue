@@ -12,7 +12,7 @@
       }" 
       @click="openOptions()">
       <div class="current-value">
-        <span v-if="internalValue">{{internalValue}}</span>
+        <span v-if="internalValue">{{internalDisplay}}</span>
         <span v-if="!internalValue" class="placeholder">{{placeholder}}</span>
       </div>
       <div class="downdown-indicator">
@@ -64,6 +64,7 @@
       return {
         openOptionsFlag: undefined,
         internalValue: undefined,
+        internalDisplay: undefined,
         inHover: false,
         optionsWidth: ''
       }
@@ -109,6 +110,7 @@
           let optionEl = self.findParentXSelectOption(e.target);
           if (optionEl !== -1){
             self.internalValue = optionEl.__vue__.$props.value;
+            self.internalDisplay = optionEl.innerText;
             self.$emit('input', self.internalValue);
             self.openOptionsFlag = false;
             self.inHover = false;
@@ -140,9 +142,10 @@
 
 <style lang="scss" scoped>
   .pesona-select.antd {
+    position: relative;
     display: inline-block;
     font-family: 'Roboto', sans-serif;
-    font-size: var(--pesona-font-base);
+    font-size: var(--pesona-font-fair);
 
     $ant-blue: #40a9ff;
     $ant-label-blue: #376DB0;
@@ -182,6 +185,7 @@
     }
     .select-options {
       position: absolute;
+      z-index: 999;
       width: var(--pesona-select-width);
       border: 1px solid #d9d9d9;
       max-height: 250px;
