@@ -6,6 +6,7 @@
     }"
     @mouseenter="hoverChange"
     @mouseleave="hoverChange">
+    <label>{{label}}</label>
     <div class="select-button-holder" ref='buttonHolder' :class="{
       'in-hover': (inHover || openOptionsFlag)
       }" 
@@ -45,6 +46,10 @@
       placeholder: {
         type: String,
         default: 'Select an item'
+      },
+      label: {
+        type: String,
+        default: "Label"
       },
       mode: {
         type: String,
@@ -138,6 +143,16 @@
     display: inline-block;
     font-family: 'Roboto', sans-serif;
     font-size: var(--pesona-font-base);
+
+    $ant-blue: #40a9ff;
+    $ant-label-blue: #376DB0;
+
+    label {
+      line-height: 21px;
+      font-size: var(--pesona-font-base);
+      color: $ant-label-blue;
+      font-weight: 500;
+    }
 
     .select-button-holder {
       display: flex;
