@@ -17,6 +17,8 @@ import xDialog from './components/dialogs/xDialog.vue';
 import xCard from './components/cards/xCard.vue';
 import xTextField from './components/inputs/xTextField.vue';
 import xCheckbox from './components/inputs/xCheckbox.vue';
+import xSelect from './components/inputs/xSelect.vue';
+import xSelectOption from './components/inputs/xSelectOption.vue';
 
 const componentCatalog = [
   xTheme,
@@ -37,7 +39,9 @@ const componentCatalog = [
   xDialog,
   xCard,
   xTextField,
-  xCheckbox
+  xCheckbox,
+  xSelect,
+  xSelectOption
 ]
 
 const install = function (Vue) {
@@ -65,7 +69,9 @@ export {
   xDialog,
   xCard,
   xTextField,
-  xCheckbox
+  xCheckbox,
+  xSelect,
+  xSelectOption
 }
 
 export default install

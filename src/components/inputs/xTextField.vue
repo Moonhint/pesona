@@ -18,6 +18,8 @@
         'floating-label': floatLabel
       }">{{label}}</label>
 
+      <span class="note" v-if="note">{{note}}</span>
+
       <input
         :class="{
           'any-prepend ': anyPrepend
@@ -73,6 +75,10 @@
       isPassword: {
         type: Boolean,
         default: false
+      },
+      note: {
+        type: String,
+        default: ''
       }
     },
     data: () => {
@@ -95,7 +101,7 @@
       }
 
       this.$nextTick(()=>{
-        if (this.isPassword){
+        if (this.isPassword && this.$refs.customInput){
           this.$refs.customInput.type = "password"
         }
       });
@@ -207,6 +213,15 @@
         font-size: var(--pesona-font-base);
         color: $ant-label-blue;
         font-weight: 500;
+      }
+
+      .note {
+        font-size: var(--pesona-font-small);
+        color: var(--pesona-shade-color-semi-white);
+        float: right;
+        clear: both;
+        margin-right: 4px;
+        line-height: 21px;
       }
 
       input {

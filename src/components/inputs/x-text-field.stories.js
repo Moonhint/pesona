@@ -26,6 +26,9 @@ storiesOf('OnDevelopment|Text Field', module)
           antd: 'antd'
         }, 'antd', 'Mode')
       },
+      note: {
+        default: text('Note', 'Note', 'Indicator')
+      },
     },
     template: `
       <div style="margin: 5px;">
@@ -34,7 +37,8 @@ storiesOf('OnDevelopment|Text Field', module)
           v-model="binder" 
           :label="label"
           :placeholder="placeholder"
-          :mode="mode">
+          :mode="mode"
+          :note="note">
         </x-text-field>
       </div>
     `,
