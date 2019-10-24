@@ -24,15 +24,27 @@ storiesOf('OnDevelopment|Select', module)
           antd: 'antd'
         }, 'antd', 'Mode')
       },
+      sizeSelect: {
+        default: select('Size Option', {
+          hero: 'hero',
+          xxlarge: 'xxlarge',
+          large: 'large',
+          medium: 'medium',
+          fair: 'fair',
+          base: 'base',
+          small: 'small',
+          tiny: 'tiny'
+        }, 'fair', 'Size')
+      },
     },
     template: `
       <div style="margin: 5px;">
-        <x-select v-model="binder" style="width: 150px;">
+        <x-select :size="sizeSelect" v-model="binder">
           <x-select-option value="other">Other</x-select-option>
           <x-select-option value="ios">Ios</x-select-option>
           <x-select-option value="andorid">Andorid</x-select-option>
         </x-select>
-        <x-select v-model="binder">
+        <x-select :size="sizeSelect" v-model="binder">
           <x-select-option value="other">Other</x-select-option>
           <x-select-option value="ios">Ios</x-select-option>
           <x-select-option value="andorid">Andorid</x-select-option>

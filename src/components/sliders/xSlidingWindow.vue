@@ -396,7 +396,7 @@
       }
 
       .item {
-        display: inline-block;
+        display: inline-flex;
         position: relative;
         &--label {
           font-size: 12px;

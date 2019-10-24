@@ -10,19 +10,36 @@
          @mouseenter="hoverChange"
          @mouseleave="hoverChange">
       
-      <div class="prepend-icon">
-        <x-icon v-if="prependIconName" :name="prependIconName" :color="frameColor"/>
+      <div ref="prependIcon"
+           class="prepend-icon"
+           :style="{
+            'bottom': quaterOfInputHeight,
+            'margin-left': halfSizeValue
+           }" 
+           v-if="prependIconName">
+        <x-icon :name="prependIconName" padding="0" :color="frameColor" :size="sizeValue"/>
       </div>
 
-      <label :class="{
+      <div 
+        ref="customPrepend"
+        class="custom-prepend" 
+        v-if="!prependIconName">
+        <slot name="prepend"></slot>
+      </div>
+
+      <label v-if="label" :class="{
         'floating-label': floatLabel
       }">{{label}}</label>
 
       <span class="note" v-if="note">{{note}}</span>
 
       <input
+        :style="{
+          'font-size': sizeValue
+        }"
         :class="{
-          'any-prepend ': anyPrepend
+          'no-prepend': !anyPrepend,
+          'any-prepend': anyPrepend 
         }"
         :placeholder="placeholder" 
         :value="value" 
@@ -58,7 +75,7 @@
       },
       label: {
         type: String,
-        default: "Label"
+        default: ""
       },
       placeholder: {
         type: String,
@@ -79,6 +96,10 @@
       note: {
         type: String,
         default: ''
+      },
+      size: {
+        type: String,
+        default: 'fair'
       }
     },
     data: () => {
@@ -104,6 +125,7 @@
         if (this.isPassword && this.$refs.customInput){
           this.$refs.customInput.type = "password"
         }
+        this.prependIconWidth;
       });
     },
     computed:{
@@ -111,10 +133,40 @@
         return (!this.placeholder && !this.inFocus && !this.value)
       },
       anyPrepend(){
-        return (this.prependIconName) ? true : false;
+        this.$nextTick(()=>{
+          this.initCalculatePrependPadding();
+        });
+        return (this.prependIconName || this.$slots.prepend) ? true : false;
+      },
+      sizeValue(){
+        this.$nextTick(()=>{
+          this.initCalculatePrependPadding();
+        });
+        return this._normalizeValue(this.size);
+      },
+      halfSizeValue(){
+        return this._normalizeHalfValue(this.size);
+      },
+      quaterOfInputHeight(){
+        let inputHeight = (parseFloat(this.sizeValue) * 2) + 6;
+        return `${inputHeight / 4}px`;
       }
     },
     methods: {
+      initCalculatePrependPadding(){
+        let self = this;
+        let clientWidth = 0;
+        if (self.prependIconName){
+          clientWidth = self.$refs.prependIcon.clientWidth;
+        }else if (self.$slots.prepend){
+          clientWidth = self.$refs.customPrepend.clientWidth;
+        }
+        let width = clientWidth + parseFloat(self.sizeValue);
+        this._setLocalCssVariables({
+          '--pesona-text-field-prepend-padding': `${width}px`,
+        });
+        return `${width}px`;
+      },
       emitInputed() {
         this.$emit('input', this.$refs.customInput.value); 
       },
@@ -150,6 +202,7 @@
 
 <style lang="scss" scoped>
   .pesona-text-field {
+    position: relative;
     font-family: 'Roboto', sans-serif;
     
     .material-mode {
@@ -229,7 +282,6 @@
         box-sizing: border-box;
         margin: 0;
         margin-top: 4px;
-        padding: 0;
         font-variant: tabular-nums;
         list-style: none;
         -webkit-font-feature-settings: 'tnum';
@@ -237,10 +289,11 @@
         position: relative;
         display: inline-block;
         width: 100%;
-        padding: 10px 12px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 12px;
         color: rgba(0,0,0,0.65);
-        font-size: 14px;
-        line-height: 1;
+        line-height: 2;
         background-color: var(--pesona-shade-color-white);
         background-image: none;
         border: 1px solid #d9d9d9;
@@ -261,14 +314,26 @@
 
       .prepend-icon {
         display: inline-block;
-        top: 34px;
-        left: 15px;
+        left: 0;
+        transform: translateY(10%);
+        position: absolute;
+        z-index: 10;
+      }
+
+      .custom-prepend {
+        display: inline-block;
+        bottom: 0;
+        left: 0;
         position: absolute;
         z-index: 10;
       }
 
       .any-prepend {
-        padding-left: 35px;
+        padding-left: var(--pesona-text-field-prepend-padding);
+      }
+
+      .no-prepend {
+        padding-left: var(--pesona-font-small);
       }
     }
 

@@ -4,24 +4,29 @@
       'material': mode === 'material',
       'is-block': block
     }"
+    :style="{
+      'font-size': sizeValue
+    }"
     @mouseenter="hoverChange"
     @mouseleave="hoverChange">
-    <label>{{label}}</label>
+    <label v-if="label">{{label}}</label>
     <div class="select-button-holder" ref='buttonHolder' :class="{
       'in-hover': (inHover || openOptionsFlag)
       }" 
       @click="openOptions()">
       <div class="current-value">
-        <span v-if="internalValue">{{internalDisplay}}</span>
-        <span v-if="!internalValue" class="placeholder">{{placeholder}}</span>
+        <span v-if="internalValue !== undefined">
+            {{internalDisplay}}
+        </span>
+        <span v-if="internalValue === undefined" class="placeholder">{{placeholder}}</span>
       </div>
       <div class="downdown-indicator">
-        <x-icon class="caret-icon" v-if="openOptionsFlag" mode="material-icons" padding="0" name="expand_less"/>
-        <x-icon class="caret-icon" v-if="!openOptionsFlag" mode="material-icons" padding="0" name="expand_more"/>
+        <x-icon class="caret-icon" v-if="openOptionsFlag" mode="material-icons" padding="0" name="expand_less" :size="sizeValue"/>
+        <x-icon class="caret-icon" v-if="!openOptionsFlag" mode="material-icons" padding="0" name="expand_more" :size="sizeValue"/>
       </div>
     </div>
     <transition name="fade">
-      <div class="select-options" ref='optionContainer' v-if="openOptionsFlag">
+      <div class="select-options" ref='optionContainer' v-show="openOptionsFlag">
         <slot></slot>
       </div>
     </transition>
@@ -35,13 +40,16 @@
   import dataTypeMixin from 'mixins/dataTypeMixin';
   import xIcon from './../icons/xIcon';
 
+  // TODO: sizing with prop
+  // TODO: change color and size on selected display
+  // TOOD: with selected value
   export default {
     name: 'x-select',
     components: { xIcon },
     mixins: [dimensionMixin, styleMixin, dataTypeMixin],
     props:{
       value: {
-        default: false
+        default: undefined
       },
       placeholder: {
         type: String,
@@ -49,7 +57,7 @@
       },
       label: {
         type: String,
-        default: "Label"
+        default: ""
       },
       mode: {
         type: String,
@@ -58,21 +66,30 @@
       block: {
         type: Boolean,
         default: false
+      },
+      size: {
+        type: String,
+        default: 'fair'
+      },
+      holder: {
+        type: String,
+        default: 'button'
       }
     },
     data: () => {
       return {
-        openOptionsFlag: undefined,
+        openOptionsFlag: false,
         internalValue: undefined,
         internalDisplay: undefined,
         inHover: false,
-        optionsWidth: ''
+        optionsWidth: '',
+        childDatas: []
       }
     }, 
     mounted(){
       let self = this;
       this.$nextTick(()=>{
-        self.internalValue = this.value;
+        self.assignInitialValue();
         self.initListenterForOptionsClick();
         self.calculateOptionContainerWidth();
         document.addEventListener('mousedown', this.handleClickOutside, false);
@@ -81,10 +98,27 @@
     beforeDestroy(){
       document.removeEventListener('mousedown', this.handleClickOutside, false);
     },
-    computed:{
-
+    computed: {
+      sizeValue() {
+        return this._normalizeValue(this.size);
+      }
     },
     methods: {
+      assignInitialValue(){
+        let self = this;
+        self.$el.getElementsByClassName('pesona-select-option').forEach((n)=>{
+          self.childDatas.push({
+            value: n.__vue__.$props.value,
+            display: n.innerText
+          });
+        });
+
+        let childFound = self.childDatas.find(n=> n.value === this.value);
+        if (childFound){
+          self.internalValue = childFound.value;
+          self.internalDisplay = childFound.display;
+        }
+      },
       calculateOptionContainerWidth(){
         let buttonHolderEl = this.$refs.buttonHolder;
         this.optionsWidth = `${buttonHolderEl.clientWidth}px`;
@@ -145,7 +179,6 @@
     position: relative;
     display: inline-block;
     font-family: 'Roboto', sans-serif;
-    font-size: var(--pesona-font-fair);
 
     $ant-blue: #40a9ff;
     $ant-label-blue: #376DB0;
@@ -165,15 +198,21 @@
       line-height: 2;
       position: relative;
 
+      .placeholder {
+        color: var(--pesona-shade-color-semi-white);
+        vertical-align: middle;
+      }
+      
       .current-value {
         display: inline-block;
         color: #314659;
         user-select: none;
-        margin: 0 11px;
+        margin: 2px 11px;
       }
       .downdown-indicator {
         display: inline-block;
         padding-right: 8px;
+        margin-top: 2px;
         svg {
           vertical-align: middle;
         }
