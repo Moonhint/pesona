@@ -16,7 +16,7 @@
     "simplebar": "^4.2.3-corejs2",
     "vue": "2.6.10",
     "webfontloader": "^1.6.28",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "main": "dist/pesona.common.js",
   "devDependencies": {
